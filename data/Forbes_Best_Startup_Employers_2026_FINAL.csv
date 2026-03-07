@@ -1,0 +1,501 @@
+rank,name,industry,location,year_founded,career_url
+1,Whatnot,Retail,"Los Angeles, California",2019,https://www.whatnot.com/careers
+2,Billd,Finance,"Austin, Texas",2018,https://www.billd.com/careers
+3,Cribl,Business Products & Software Services,"San Francisco, California",2018,https://cribl.io/jobs/
+4,Deel,Business Products & Software Services,"San Francisco, California",2018,https://www.deel.com/careers
+5,Pacaso,Real Estate,"San Francisco, California",2020,https://www.pacaso.com/careers
+6,Anthropic,Technology,"San Francisco, California",2021,https://www.anthropic.com/careers
+7,Atrium,Technology,"Bozeman, Montana",2018,https://www.atriumhq.com/careers
+8,Hightouch,Business Products & Software Services,"San Francisco, California",2018,https://hightouch.com/careers
+9,Colossal Biosciences,Biotechnology & Agriculture,"Dallas, Texas",2021,https://colossal.com/careers/
+10,Ramp,Finance,"New York, New York",2019,https://ramp.com/careers
+11,Anyscale,Technology,"San Francisco, California",2019,https://www.anyscale.com/careers
+12,Cedar,Healthcare,"New York, New York",2016,https://cedar.com/careers
+13,Attentive.ai,Business Products & Software Services,"Wilmington, Delaware",2017,https://www.attentive.com/careers
+14,Otter.ai,Technology,"Mountain View, California",2016,https://otter.ai/careers
+15,BigID,Security,"New York, New York",2016,https://bigid.com/careers/
+16,Steadily,Finance,"Austin, Texas",2020,https://www.steadily.com/careers
+17,TestMu AI,Business Products & Software Services,"San Francisco, California",2017,https://www.lambdatest.com/careers
+18,VAST Data,Technology,"New York, New York",2016,https://www.vastdata.com/careers
+19,Anduril Industries,Robotics/Engineering,"Los Angeles, California",2017,https://www.anduril.com/careers/
+20,Spendbase,Business Products & Software Services,"Lewes, Delaware",2023,https://spendbase.co/careers
+21,Contentstack,Business Products & Software Services,"San Francisco, California",2018,https://www.contentstack.com/company/careers
+22,Harness,Business Products & Software Services,"San Francisco, California",2016,https://www.harness.io/company/careers
+23,Accrete AI,Technology,"New York, New York",2017,https://accrete.ai/careers
+24,Ethena,Business Products & Software Services,"New York, New York",2019,https://www.ethena.com/careers
+25,Faire,Retail,"San Francisco, California",2017,https://www.faire.com/careers
+26,Ergeon,Real Estate,"San Francisco, California",2018,https://www.ergeon.com/careers
+27,Merge,Business Products & Software Services,"San Francisco, California",2020,https://merge.dev/careers
+28,Kairos Power,Energy & Resources,"Alameda, California",2016,https://kairospower.com/careers/
+29,Stoke Space,Robotics/Engineering,"Kent, Washington",2019,https://www.stokespace.com/careers/
+30,Mercury,Finance,"San Francisco, California",2017,https://mercury.com/careers
+31,Gem,Business Products & Software Services,"San Francisco, California",2017,https://www.gem.com/company/careers
+32,Ridgeline,Finance,"Incline Village, Nevada",2018,https://ridgelineapps.com/careers/
+33,ClickUp,Business Products & Software Services,"San Diego, California",2017,https://clickup.com/careers
+34,LandingAI,Technology,"Mountain View, California",2017,https://landing.ai/careers/
+35,Glean,Business Products & Software Services,"Palo Alto, California",2019,https://www.glean.com/careers
+36,Lunar Energy,Energy & Resources,"Mountain View, California",2020,https://www.lunarenergy.com/careers
+37,Commonwealth Fusion Systems,Energy & Resources,"Devens, Massachusetts",2017,https://www.cfs.energy/careers
+38,MaintainX,Business Products & Software Services,"San Francisco, California",2018,https://www.getmaintainx.com/careers
+39,Fingerprint,Security,"Chicago, Illinois",2019,https://fingerprint.com/careers/
+40,Nuro,Transportation & Logistics,"Mountain View, California",2016,https://www.nuro.ai/careers
+41,Zip,Business Products & Software Services,"San Francisco, California",2020,https://ziphq.com/careers
+42,Stensul,Advertising & Marketing,"New York, New York",2016,https://stensul.com/careers/
+43,RudderStack,Business Products & Software Services,"San Francisco, California",2019,https://www.rudderstack.com/careers/
+44,Hippocratic AI,Healthcare,"Palo Alto, California",2023,https://www.hippocratic.ai/careers
+45,OpenSpace,Technology,"San Francisco, California",2017,https://www.openspace.ai/careers/
+46,Cellares,Biotechnology & Agriculture,"South San Francisco, California",2019,https://www.cellares.com/careers/
+47,Skyflow,Security,"Palo Alto, California",2019,https://www.skyflow.com/careers
+48,Strive Health,Healthcare,"Denver, Colorado",2018,https://strivehealth.com/careers/
+49,Foundation AI,Business Products & Software Services,"Irvine, California",2018,https://www.foundation-ai.com/careers
+50,Pave,Business Products & Software Services,"San Francisco, California",2019,https://www.pave.com/careers
+51,Substack,Media & Entertainment,"San Francisco, California",2017,https://substack.com/jobs
+52,Watershed,Business Products & Software Services,"San Francisco, California",2019,https://watershed.com/careers
+53,Hyro,Technology,"New York, New York",2018,https://www.hyro.ai/careers/
+54,BuildOps,Business Products & Software Services,"Santa Monica, California",2018,https://buildops.com/careers/
+55,People.ai,Technology,"San Francisco, California",2016,https://people.ai/careers/
+56,Cosm,Media & Entertainment,"Los Angeles, California",2020,https://www.cosm.com/careers
+57,Orca Security,Security,"Portland, Oregon",2019,https://orca.security/about/careers/
+58,Cresta,Business Products & Software Services,"Palo Alto, California",2017,https://cresta.com/careers/
+59,Valor PayTech,Finance,"New York, New York",2019,https://valorpaytech.com/careers/
+60,Sardine,Security,"San Francisco, California",2020,https://www.sardine.ai/careers
+61,Abacus.AI,Business Products & Software Services,"San Francisco, California",2019,https://abacus.ai/app/careers
+62,Labelbox,Technology,"San Francisco, California",2018,https://labelbox.com/careers/
+63,Hiya,Security,"Seattle, Washington",2016,https://hiya.com/careers
+64,Smartcat,Technology,"Wilmington, North Carolina",2016,https://www.smartcat.com/careers/
+65,Place,Real Estate,"Bellingham, Washington",2019,https://www.place.com/careers
+66,Clarity AI,Technology,"New York, New York",2017,https://clarity.ai/careers/
+67,Rippling,Business Products & Software Services,"San Francisco, California",2016,https://www.rippling.com/careers
+68,Jerry,Finance,"Palo Alto, California",2017,https://www.getjerry.com/careers
+69,ThreatLocker,Security,"Orlando, Florida",2017,https://www.threatlocker.com/careers
+70,Luna,Healthcare,"Nashville, Tennessee",2018,https://luna.com/careers
+71,Ambient.ai,Security,"Redwood City, California",2017,https://ambient.ai/careers/
+72,Howdy,Business Products & Software Services,"Austin, Texas",2018,https://www.howdy.com/careers
+73,Upstart 13,Technology,"Austin, Texas",2020,https://www.upstart.com/careers
+74,HYCU,Technology,"Boston, Massachusetts",2018,https://www.hycu.com/company/careers
+75,Validity,Advertising & Marketing,"Boston, Massachusetts",2018,https://www.validity.com/company/careers/
+76,SurveySparrow,Business Products & Software Services,"Walnut, California",2017,https://surveysparrow.com/careers/
+77,Openly,Finance,"Boston, Massachusetts",2017,https://openly.com/careers/
+78,Cerebras Systems,Technology,"Sunnyvale, California",2016,https://cerebras.ai/careers/
+79,Crossbeam,Business Products & Software Services,"Philadelphia, Pennsylvania",2018,https://www.crossbeam.com/careers/
+80,LineVision,Energy & Resources,"Boston, Massachusetts",2018,https://linevisioninc.com/careers/
+81,DevRev,Technology,"Palo Alto, California",2020,https://devrev.ai/careers
+82,Axonius,Security,"New York, New York",2017,https://www.axonius.com/careers
+83,Rocketlane,Business Products & Software Services,"San Francisco, California",2020,https://www.rocketlane.com/careers
+84,Metropolis,Technology,"Santa Monica, California",2017,https://metropolis.io/careers
+85,TIFIN,Finance,"Boulder, Colorado",2018,https://tifin.com/careers/
+86,acceldata,Business Products & Software Services,"Campbell, California",2018,https://www.acceldata.io/company/careers
+87,Collective,Professional Services,"San Francisco, California",2020,https://www.collective.com/careers
+88,Flock Safety,Security,"Atlanta, Georgia",2017,https://www.flocksafety.com/careers
+89,GrowthSpace,Education & EdTech,"New York, New York",2018,https://www.growthspace.com/careers
+90,Neuralink,Healthcare,"Fremont, California",2016,https://neuralink.com/careers/
+91,Fireblocks,Finance,"New York, New York",2018,https://www.fireblocks.com/careers/
+92,Avenue Z,Advertising & Marketing,"Miami, Florida",2023,https://avenuez.com/careers
+93,Hyperproof,Security,"Seattle, Washington",2018,https://hyperproof.io/company/careers/
+94,Spotnana Technology,Business Products & Software Services,"New York, New York",2020,https://www.spotnana.com/careers/
+95,Maze,Business Products & Software Services,"San Francisco, California",2018,https://maze.co/careers/
+96,RevenueCat,Business Products & Software Services,"Brandon, Florida",2017,https://www.revenuecat.com/careers/
+97,Spin.AI,Security,"Palo Alto, California",2016,https://spin.ai/careers/
+98,Interplay Learning,Education & EdTech,"Austin, Texas",2016,https://interplaylearning.com/careers/
+99,Athletic Brewing,Retail,"Milford, Connecticut",2017,https://athleticbrewing.com/pages/careers
+100,Wing Assistant,Business Products & Software Services,"Berkeley, California",2018,https://www.wingassistant.com/careers/
+101,Hedera Hashgraph,Technology,"Las Vegas, Nevada",2018,https://hedera.com/careers
+102,Neostella,Business Products & Software Services,"Milwaukee, Wisconsin",2019,https://neostella.com/careers/
+103,Owner,Technology,"San Francisco, California",2018,https://www.owner.com/careers
+104,1Kosmos,Security,"Iselin, New Jersey",2018,https://www.1kosmos.com/company/careers/
+105,Solugen,Manufacturing,"Houston, Texas",2016,https://solugen.com/careers/
+106,SiMa.ai,Technology,"San Jose, California",2018,https://sima.ai/careers/
+107,Abnormal AI,Security,"Las Vegas, Nevada",2018,https://abnormalsecurity.com/careers
+108,Fathom,Technology,"San Francisco, California",2020,https://fathom.video/careers
+109,Remote,Business Products & Software Services,"San Francisco, California",2019,https://remote.com/careers
+110,FileCloud,Business Products & Software Services,"Austin, Texas",2016,https://www.filecloud.com/careers/
+111,Coursedog,Education & EdTech,"New York, New York",2018,https://www.coursedog.com/careers
+112,Cube,Business Products & Software Services,"New York, New York",2018,https://www.cube.dev/careers
+113,Plus,Technology,"Santa Clara, California",2016,https://plus.ai/careers/
+114,Lemon Perfect,Lifestyle & Health,"Atlanta, Georgia",2017,https://www.lemonperfect.com/pages/careers
+115,NovaKid,Education & EdTech,"San Francisco, California",2017,https://novakid.com/careers/
+116,VIZ.AI,Healthcare,"San Francisco, California",2016,https://www.viz.ai/careers
+117,DoorLoop,Real Estate,"Miami, Florida",2019,https://www.doorloop.com/careers
+118,Dandy,Healthcare,"New York, New York",2020,https://www.meetdandy.com/careers/
+119,Andor Health,Technology,"Orlando, Florida",2018,https://andorhealth.com/careers/
+120,Rare Carat,Retail,"New York, New York",2016,https://www.rarecarat.com/careers
+121,SpyCloud,Security,"Austin, Texas",2016,https://spycloud.com/careers/
+122,HypeAuditor,Advertising & Marketing,"Indianapolis, Indiana",2018,https://hypeauditor.com/en/careers/
+123,Thyme Care,Healthcare,"Nashville, Tennessee",2020,https://thymecare.com/careers/
+124,FalconX,Finance,"San Mateo, California",2018,https://falconx.io/careers/
+125,TekRevol,Business Products & Software Services,"Houston, Texas",2018,https://tekrevol.com/careers/
+126,Gatik,Transportation & Logistics,"Mountain View, California",2017,https://gatik.ai/careers/
+127,Ollie,Lifestyle & Health,"Reno, Nevada",2016,https://www.myollie.com/careers/
+128,Spring Health,Healthcare,"New York, New York",2016,https://springhealth.com/careers/
+129,Sidecar Health,Finance,"Manhattan Beach, California",2018,https://sidecarhealth.com/careers
+130,Turing AI,Security,"San Mateo, California",2017,https://www.turing.com/careers
+131,Assembled,Business Products & Software Services,"San Francisco, California",2018,https://www.assembled.com/careers
+132,Coco,Transportation & Logistics,"Santa Monica, California",2020,https://www.cocobots.com/careers
+133,Oyster,Business Products & Software Services,"San Francisco, California",2020,https://www.oysterhr.com/careers
+134,Modular,Technology,"Los Altos, California",2022,https://www.modular.com/careers
+135,SuperAnnotate,Technology,"San Francisco, California",2019,https://www.superannotate.com/careers
+136,May Mobility,Transportation & Logistics,"Ann Arbor, Michigan",2017,https://maymobility.com/careers/
+137,Alchemy,Business Products & Software Services,"San Francisco, California",2017,https://www.alchemy.com/careers
+138,Redwood Materials,Energy & Resources,"Carson City, Nevada",2017,https://www.redwoodmaterials.com/careers
+139,Carbon Robotics,Robotics/Engineering,"Seattle, Washington",2018,https://carbonrobotics.com/careers
+140,Lively,Lifestyle & Health,"San Francisco, California",2016,https://livelyme.com/careers/
+141,Delfi Diagnostics,Healthcare,"Palo Alto, California",2019,https://www.delfi.com/careers/
+142,Fireflies.ai,Business Products & Software Services,"Pleasanton, California",2016,https://fireflies.ai/careers
+143,Amperity,Business Products & Software Services,"Seattle, Washington",2016,https://amperity.com/careers
+144,Drata,Security,"San Francisco, California",2020,https://drata.com/company/careers
+145,Overtime,Media & Entertainment,"Brooklyn, New York",2016,https://overtime.tv/careers
+146,Upgrade,Finance,"San Francisco, California",2016,https://www.upgrade.com/careers/
+147,Spur,Business Products & Software Services,"Huntsville, Alabama",2017,https://www.spur.fit/careers
+148,Placer.ai,Technology,"Covina, California",2016,https://www.placer.ai/careers/
+149,Syndio,Business Products & Software Services,"Seattle, Washington",2016,https://syndio.com/careers/
+150,Alkira,Technology,"San Jose, California",2018,https://alkira.com/careers/
+151,SeekOut,Technology,"Bellevue, Washington",2016,https://seekout.com/careers/
+152,Coalition,Security,"San Francisco, California",2017,https://www.coalitioninc.com/careers
+153,Talkiatry,Healthcare,"New York, New York",2019,https://www.talkiatry.com/careers
+154,Embrace,Business Products & Software Services,"Culver City, California",2016,https://embrace.io/careers/
+155,Render,Technology,"San Francisco, California",2018,https://render.com/careers
+156,Candidly,Finance,"New York, New York",2016,https://www.candidly.com/careers
+157,Mill,Lifestyle & Health,"San Bruno, California",2020,https://mill.com/pages/careers
+158,Altos Labs,Biotechnology & Agriculture,"Redwood City, California",2021,https://altoslabs.com/careers/
+159,Puttshack,Hospitality,"Chicago, Illinois",2017,https://www.puttshack.com/careers/
+160,Cherre,Real Estate,"New York, New York",2016,https://cherre.com/careers/
+161,Tigera,Security,"San Francisco, California",2016,https://www.tigera.io/careers/
+162,Lightmatter,Hardware & Electronics,"Mountain View, California",2017,https://lightmatter.co/careers/
+163,Hayden AI,Transportation & Logistics,"San Francisco, California",2019,https://hayden.ai/careers/
+164,CyberFOX,Security,"Tampa, Florida",2021,https://cyberfox.com/careers/
+165,Lumos,Business Products & Software Services,"San Francisco, California",2020,https://www.lumos.com/company/careers
+166,qBotica,Business Products & Software Services,"Phoenix, Arizona",2017,https://qbotica.com/careers/
+167,Devoted Health,Healthcare,"Waltham, Massachusetts",2017,https://www.devoted.com/careers
+168,Xage Security,Security,"Palo Alto, California",2017,https://xage.com/careers/
+169,Ava Labs,Finance,"New York, New York",2018,https://www.avalabs.org/careers
+170,Jellysmack,Media & Entertainment,"New York, New York",2016,https://jellysmack.com/careers/
+171,Astronomer,Technology,"New York, New York",2018,https://www.astronomer.io/careers/
+172,Verkada,Security,"San Mateo, California",2016,https://www.verkada.com/careers/
+173,Vibe,Business Products & Software Services,"Bellevue , Washington",2016,https://vibeapp.com/careers
+174,Parafin,Finance,"San Francisco, California",2020,https://parafin.com/careers/
+175,Vendr,Business Products & Software Services,"Boston, Massachusetts",2019,https://www.vendr.com/careers
+176,Bond Vet,Healthcare,"New York, New York",2019,https://www.bondvet.com/careers
+177,Codvo,Business Products & Software Services,"Plano, Texas",2019,https://www.codvo.ai/careers
+178,Trullion,Business Products & Software Services,"New York, New York",2020,https://trullion.com/careers/
+179,Opto Investments,Finance,"New York, New York",2020,https://www.opto.com/careers
+180,Topsort,Business Products & Software Services,"San Francisco, California",2021,https://www.topsort.com/careers
+181,Middesk,Technology,"San Francisco, California",2018,https://www.middesk.com/careers
+182,Starburst Data,Technology,"Boston, Massachusetts",2017,https://www.starburst.io/careers/
+183,Zilliz,Technology,"Redwood City, California",2017,https://zilliz.com/careers
+184,Carbon Direct,Energy & Resources,"New York, New York",2019,https://www.carbon-direct.com/careers
+185,Cart.com,Business Products & Software Services,"Houston, Texas",2020,https://www.cart.com/careers
+186,AvantStay,Hospitality,"Austin, Texas",2017,https://avantstay.com/careers
+187,Halcyon,Security,"San Diego, California",2021,https://www.halcyon.ai/careers
+188,ArmorCode,Security,"Palo Alto, California",2020,https://www.armorcode.com/careers
+189,Supabase,Technology,"San Francisco, California",2020,https://supabase.com/careers
+190,Responsive Financial Technologies,Business Products & Software Services,"Frisco, Texas",2016,https://www.responsive.ai/careers
+191,Acadia,Advertising & Marketing,"Atlanta, Georgia",2021,https://www.acadia.io/careers
+192,LucidLink,Business Products & Software Services,"San Francisco, California",2016,https://www.lucidlink.com/careers
+193,SafetyWing,Finance,"San Francisco, California",2017,https://safetywing.com/careers
+194,Panorays,Security,"New York, New York",2016,https://www.panorays.com/careers/
+195,RentSpree,Real Estate,"Seattle, Washington",2016,https://www.rentspree.com/careers
+196,Flex (New York),Finance,"New York, New York",2019,https://getflex.com/careers/
+197,OpenSea,Business Products & Software Services,"New York, New York",2017,https://opensea.io/careers
+198,Torq,Security,"New York, New York",2020,https://torq.io/careers/
+199,JobGet,Professional Services,"Boston, Massachusetts",2019,https://jobget.com/careers
+200,Owkin,Technology,"New York, New York",2016,https://www.owkin.com/careers
+201,Attentive,Advertising & Marketing,"New York, New York",2016,https://www.attentivemobile.com/careers
+202,Galileo,Healthcare,"New York, New York",2018,https://www.galileo.io/careers
+203,Revel,Transportation & Logistics,"Brooklyn, New York",2018,https://reveliot.com/careers/
+204,Forethought,Technology,"San Francisco, California",2017,https://forethought.ai/careers/
+205,Hypersonix,Technology,"San Francisco, California",2018,https://hypersonix.ai/careers/
+206,Hone,Education & EdTech,"Encinitas, California",2018,https://honehq.com/careers/
+207,Legion Technologies,Business Products & Software Services,"Redwood City, California",2016,https://legiontech.com/careers/
+208,Sourcepass,Business Products & Software Services,"Melville, New York",2021,https://www.sourcepass.com/careers
+209,Cityblock Health,Healthcare,"Brooklyn, New York",2017,https://www.cityblock.com/careers
+210,Wrapbook,Business Products & Software Services,"New York, New York",2018,https://www.wrapbook.com/careers
+211,LoanPro,Finance,"Farmington, Utah",2016,https://loanpro.io/careers/
+212,Persefoni,Business Products & Software Services,"Mesa, Arizona",2020,https://persefoni.com/careers/
+213,Dragos,Security,"Hanover, New Hampshire",2016,https://www.dragos.com/company/careers/
+214,Notable,Healthcare,"San Mateo, California",2017,https://www.notable.health/careers
+215,Trainual,Business Products & Software Services,"Tempe, Arizona",2018,https://trainual.com/careers
+216,Flutterwave,Finance,"San Francisco , California",2016,https://flutterwave.com/us/careers
+217,Nao Now,Education & EdTech,"Dallas, Texas",2021,https://naonow.com/careers
+218,Upside,Advertising & Marketing,"Washington, District of Columbia",2016,https://upside.com/careers
+219,Infrrd,Business Products & Software Services,"San Jose, California",2017,https://infrrd.ai/careers/
+220,Electric Hydrogen,Energy & Resources,"Devens, Massachusetts",2020,https://www.electrichydrogen.com/careers/
+221,MacroHealth,Healthcare,"Kirkland, Washington",2017,https://macrohealth.com/careers/
+222,Unit,Finance,"New York, New York",2019,https://www.unit.co/careers
+223,Torch,Education & EdTech,"San Francisco, California",2017,https://torch.io/careers/
+224,Osano,Security,"Austin, Texas",2018,https://www.osano.com/careers
+225,Sibros,Technology,"San Jose, California",2018,https://sibros.tech/careers/
+226,Extend Enterprises,Finance,"New York, New York",2017,https://www.extend.com/careers
+227,MoonPay,Finance,"New York, New York",2019,https://www.moonpay.com/careers
+228,Hometap,Finance,"Boston, Massachusetts",2017,https://www.hometap.com/careers
+229,Vic.ai,Business Products & Software Services,"New York, New York",2017,https://www.vic.ai/careers
+230,Kojo,Business Products & Software Services,"San Francisco, California",2018,https://www.usekojo.com/careers
+231,Coterie Insurance,Finance,"Appleton, Wisconsin",2018,https://coterieinsurance.com/careers/
+232,Lokalise,Business Products & Software Services,"Dover, Delaware",2017,https://lokalise.com/careers
+233,Lead Bank,Finance,"Kansas City, Missouri",2019,https://leadbank.com/careers
+234,Bilt,Finance,"New York, New York",2021,https://www.biltrewards.com/careers
+235,OneTrust,Security,"Atlanta, Georgia",2016,https://www.onetrust.com/careers/
+236,RNWBL,Energy & Resources,"Houston, Texas",2021,https://www.rnwbl.com/careers
+237,Observe.AI,Technology,"Redwood City, California",2017,https://www.observe.ai/careers
+238,Tapcheck,Finance,"Plano, Texas",2019,https://tapcheck.com/careers/
+239,Postscript,Advertising & Marketing,"Scottsdale, Arizona",2018,https://postscript.io/careers
+240,Hello Rache,Professional Services,"Sierra Vista, Arizona",2017,https://hellorache.com/careers/
+241,DataGrail,Security,"San Francisco, California",2018,https://www.datagrail.io/careers
+242,Element Biosciences,Biotechnology & Agriculture,"San Diego, California",2017,https://www.elementbiosciences.com/careers
+243,Iru,Business Products & Software Services,"Miami, Florida",2018,https://iru.com/careers
+244,Mammoth Biosciences,Biotechnology & Agriculture,"Brisbane, California",2017,https://mammoth.bio/careers/
+245,Snappr,Professional Services,"San Francisco, California",2017,https://www.snappr.com/careers
+246,Snorkel AI,Technology,"Redwood City, California",2019,https://snorkel.ai/careers/
+247,Public.com,Technology,"New York, New York",2019,https://public.com/careers
+248,At-Bay,Finance,"San Francisco, California",2016,https://www.at-bay.com/careers/
+249,SOLO,Business Products & Software Services,"Lehi, Utah",2018,https://solofoods.com/careers
+250,Secureframe,Security,"San Francisco, California",2020,https://secureframe.com/careers
+251,Form Energy,Energy & Resources,"Somerville, Massachusetts",2017,https://formenergy.com/careers/
+252,LogRocket,Technology,"Boston, Massachusetts",2016,https://logrocket.com/careers/
+253,QuantCo,Professional Services,"Boston, Massachusetts",2017,https://www.quantco.com/careers
+254,Dusty Robotics,Robotics/Engineering,"Mountain View, California",2018,https://www.dustyrobotics.com/careers
+255,Black Kite,Security,"Boston, Massachusetts",2016,https://blackkite.com/careers/
+256,ArsenalBio,Biotechnology & Agriculture,"South San Francisco , California",2019,https://arsenal.bio/careers/
+257,Rec Room,Media & Entertainment,"Seattle, Washington",2016,https://recroom.com/careers
+258,Horizon3.ai,Security,"San Francisco, California",2019,https://www.horizon3.ai/careers/
+259,Creative Force,Business Products & Software Services,"Boston, Massachusetts",2019,https://www.creativeforce.io/careers
+260,Jellyfish,Technology,"Boston, Massachusetts",2017,https://jellyfish.co/careers/
+261,LinearB,Business Products & Software Services,"El Segundo, California",2018,https://linearb.io/careers/
+262,Immunai,Biotechnology & Agriculture,"New York, New York",2018,https://immunai.com/careers
+263,Honeycomb,Technology,"San Francisco, California",2016,https://www.honeycomb.io/careers
+264,Arionkoder,Technology,"Boston, Massachusetts",2020,https://arionkoder.com/careers
+265,ChargeAfter,Finance,"New York, New York",2017,https://www.chargeafter.com/careers
+266,Reliable Robotics Corporation,Transportation & Logistics,"Mountain View, California",2017,https://www.reliable.com/careers
+267,Vestwell,Finance,"New York, New York",2016,https://vestwell.com/careers/
+268,Polly,Finance,"San Francisco, California",2019,https://www.polly.ai/careers
+269,Unqork,Business Products & Software Services,"New York, New York",2017,https://www.unqork.com/careers
+270,Athyna,Technology,"San Diego, California",2018,https://www.athyna.com/careers
+271,Lumen Bioscience,Biotechnology & Agriculture,"Seattle, Washington",2017,https://www.lumenbioscience.com/careers/
+272,Nova Credit,Finance,"San Francisco, California",2016,https://www.novacredit.com/careers
+273,InStride,Education & EdTech,"El Segundo, California",2019,https://www.instride.com/careers/
+274,Cyble,Security,"Cupertino, California",2019,https://cyble.com/careers/
+275,Eightfold,Technology,"Santa Clara, California",2016,https://eightfold.ai/company/careers/
+276,Sherpa 6,Security,"Littleton, Colorado",2017,https://www.sherpa6.com/careers
+277,Chronograph,Business Products & Software Services,"Brooklyn, New York",2016,https://chronograph.pe/careers/
+278,0x,Finance,"San Francisco, California",2016,https://0x.org/careers
+279,Stellar Health,Healthcare,"New York, New York",2018,https://www.stellarhealth.com/careers
+280,Tomorrow.io,Business Products & Software Services,"Boston, Massachusetts",2016,https://www.tomorrow.io/careers/
+281,4ocean,Lifestyle & Health,"Boca Raton, Florida",2017,https://4ocean.com/pages/careers
+282,HumanIT Solutions,Professional Services,"Beavercreek, Ohio",2016,https://humanitsolutions.com/careers
+283,Veryable,Professional Services,"Dallas, Texas",2016,https://veryableinc.com/company/careers
+284,Shift5,Security,"Arlington, Virginia",2019,https://www.shift5.io/careers
+285,Candid,Healthcare,"New York, New York",2017,https://candid.org/about/work-with-us
+286,Altruist,Finance,"Culver City, California",2018,https://altruist.com/careers/
+287,NexHealth,Healthcare,"San Francisco, California",2016,https://www.nexhealth.com/careers
+288,Our Next Energy,Energy & Resources,"Novi, Michigan",2020,https://www.ourenergy.com/careers
+289,Oorwin,Technology,"Southlake, Texas",2017,https://oorwin.com/careers/
+290,Hevo Data,Business Products & Software Services,"San Francisco, California",2017,https://hevodata.com/careers/
+291,RippleMatch,Business Products & Software Services,"New York, New York",2016,https://ripplematch.com/careers/
+292,Strand Therapeutics,Biotechnology & Agriculture,"Boston, Massachusetts",2017,https://strandtx.com/careers/
+293,CodaMetrix,Technology,"Boston, Massachusetts",2019,https://www.codametrix.com/careers
+294,H1,Healthcare,"New York, New York",2017,https://h1.co/careers/
+295,Sitemetric,Security,"Houston, Texas",2018,https://sitemetric.com/careers
+296,Rafay Systems,Business Products & Software Services,"Sunnyvale, California",2017,https://rafay.co/company/careers/
+297,Levitate,Advertising & Marketing,"Raleigh, North Carolina",2017,https://levitate.ai/careers/
+298,Unstoppable Domains,Technology,"San Francisco, California",2018,https://unstoppabledomains.com/careers
+299,Narmi,Finance,"New York, New York",2016,https://narmi.com/careers/
+300,AI bees,Professional Services,"San Francisco, California",2018,https://aibees.com/careers
+301,Odeko,Business Products & Software Services,"New York, New York",2019,https://odeko.com/careers/
+302,Fluxon,Business Products & Software Services,"San Francisco, California",2017,https://fluxon.com/careers
+303,QuSecure,Security,"San Mateo, California",2019,https://qusecure.com/careers/
+304,CData Software,Technology,"Chapel Hill, North Carolina",2016,https://www.cdata.com/company/careers/
+305,Thrive,Healthcare,"New York, New York",2016,https://thriveglobal.com/careers/
+306,Revolving Games,Media & Entertainment,"San Francisco, California",2019,https://revolving.games/careers
+307,SafeRide Health,Healthcare,"San Antonio, Texas",2016,https://www.saferidehealth.com/careers
+308,Possible Finance,Finance,"Seattle, Washington",2017,https://possiblefinance.com/careers/
+309,Mighty Networks,Business Products & Software Services,"Palo Alto, California",2017,https://www.mightynetworks.com/company/careers
+310,Legacy,Biotechnology & Agriculture,"New York, New York",2018,https://givelegacy.com/careers/
+311,Paytient,Finance,"Columbia, Missouri",2018,https://paytient.com/careers/
+312,Ro,Lifestyle & Health,"New York, New York",2017,https://ro.co/careers
+313,Chili Piper,Business Products & Software Services,"New York, New York",2016,https://www.chilipiper.com/careers
+314,GoodBuy Gear,Retail,"Arvada, Colorado",2016,https://goodbuygear.com/pages/careers
+315,Jones,Real Estate,"New York, New York",2017,https://www.jonesengg.com/careers
+316,Shopmonkey,Business Products & Software Services,"Morgan Hill, California",2016,https://shopmonkey.io/careers
+317,Zuper,Business Products & Software Services,"Seattle, Washington",2016,https://www.zuper.co/careers
+318,PadSplit,Real Estate,"Atlanta, Georgia",2017,https://www.padsplit.com/careers
+319,Flowcode,Business Products & Software Services,"New York, New York",2019,https://www.flowcode.com/careers
+320,Settle,Finance,"San Francisco, California",2019,https://settle.com/careers
+321,Bevy,Business Products & Software Services,"Palo Alto, California",2017,https://bevy.com/careers
+322,Brightline,Healthcare,"San Mateo, California",2019,https://gobrightline.com/careers/
+323,Convertedin,Advertising & Marketing,"New Castle, Delaware",2019,https://convertedin.com/careers
+324,TRM Labs,Security,"San Francisco, California",2018,https://www.trmlabs.com/careers
+325,Pilot,Business Products & Software Services,"San Francisco, California",2016,https://pilot.com/careers
+326,Syntiant,Manufacturing,"Irvine, California",2017,https://www.syntiant.com/careers
+327,Anvilogic,Security,"Palo Alto, California",2019,https://anvilogic.com/careers/
+328,Joveo,Business Products & Software Services,"Menlo Park, California",2017,https://joveo.com/careers/
+329,deepwatch,Security,"Palo Alto, California",2019,https://www.deepwatch.com/careers/
+330,Veersa Technologies,Professional Services,"Las Vegas, Nevada",2020,https://www.veersatech.com/careers
+331,FundGuard,Finance,"Dedham, Massachusetts",2018,https://fundguard.com/careers/
+332,BlueVoyant,Security,"New York, New York",2017,https://www.bluevoyant.com/careers
+333,Seed Health,Biotechnology & Agriculture,"Venice, California",2016,https://seed.com/careers
+334,Vivun,Technology,"Oakland, California",2018,https://vivun.com/careers/
+335,Odetta,Business Products & Software Services,"San Francisco, California",2018,https://www.odetta.ai/careers
+336,FORT Robotics,Robotics/Engineering,"Philadelphia, Pennsylvania",2018,https://fortrobotics.com/careers/
+337,ICON Technology,Robotics/Engineering,"Austin, Texas",2017,https://iconbuild.com/careers
+338,Aiper,Hardware & Electronics,"Atlanta, Georgia",2021,https://aiper.com/pages/careers
+339,Regal,Business Products & Software Services,"New York, New York",2020,https://regal.io/careers
+340,GlossGenius,Finance,"New York, New York",2016,https://glossgenius.com/careers
+341,Careerist,Education & EdTech,"Jackson, Wyoming",2019,https://careerist.com/careers
+342,Draup,Business Products & Software Services,"The Woodlands, Texas",2017,https://draup.com/careers/
+343,EliseAI,Business Products & Software Services,"New York, New York",2017,https://eliseai.com/careers
+344,Logiwa,Technology,"Chicago, Illinois",2017,https://www.logiwa.com/careers
+345,Within Health,Healthcare,"Austin, Texas",2021,https://withinhealth.com/careers/
+346,Kasa Living,Hospitality,"Miami, Florida",2016,https://kasa.com/careers
+347,Order,Business Products & Software Services,"New York, New York",2016,https://www.orderinc.com/careers
+348,CertiK,Security,"New York, New York",2018,https://www.certik.com/careers
+349,Diligent Robotics,Robotics/Engineering,"Austin, Texas",2016,https://www.diligentrobots.com/careers
+350,VergeSense,Business Products & Software Services,"Mountain View, California",2017,https://vergesense.com/careers/
+351,AiDash,Technology,"Palo Alto, California",2019,https://www.aidash.com/careers/
+352,Anchore,Security,"Santa Barbara, California",2016,https://anchore.com/careers/
+353,Boast,Business Products & Software Services,"Chicago, Illinois",2017,https://boast.ai/careers/
+354,HUNGRY,Hospitality,"Arlington, Virginia",2016,https://www.tryhungry.com/careers
+355,Percent,Finance,"New York, New York",2018,https://percent.com/careers
+356,Kion,Business Products & Software Services,"Columbia, Maryland",2018,https://kion.io/company/careers/
+357,Extend,Technology,"San Francisco, California",2019,https://www.helloextend.com/careers
+358,Leap,Retail,"New York, New York",2018,https://www.leaptodigital.com/careers
+359,Kin Insurance,Finance,"Chicago, Illinois",2016,https://kin.com/careers/
+360,Dispatch,Transportation & Logistics,"Bloomington, Minnesota",2016,https://www.dispatchit.com/careers
+361,Terabase Energy,Energy & Resources,"Berkeley, California",2019,https://terabase.energy/careers/
+362,Paperflite,Business Products & Software Services,"Wyoming, Delaware",2016,https://www.paperflite.com/careers
+363,Bestow,Business Products & Software Services,"Dallas, Texas",2016,https://bestow.com/careers/
+364,Sunbit,Finance,"Los Angeles, California",2016,https://sunbit.com/careers/
+365,Omdena,Professional Services,"New York, New York",2019,https://omdena.com/careers/
+366,AE.Studio,Professional Services,"Marina del Rey, California",2016,https://ae.studio/careers
+367,Chief,Professional Services,"New York, New York",2019,https://chief.com/careers
+368,Expel,Security,"Herndon, Virginia",2016,https://expel.com/careers/
+369,Spekit,Business Products & Software Services,"Denver, Colorado",2018,https://spekit.com/careers/
+370,Heirloom,Energy & Resources,"San Francisco, California",2020,https://www.heirloomcarbon.com/careers
+371,Sendoso,Advertising & Marketing,"San Francisco, California",2016,https://sendoso.com/careers/
+372,Argyle,Business Products & Software Services,"New York, New York",2018,https://argyle.com/us/careers
+373,Enable,Business Products & Software Services,"San Francisco, California",2016,https://enable.com/careers
+374,Upshift,Business Products & Software Services,"Cincinnati, Ohio",2016,https://upshift.work/careers
+375,AiFi,Technology,"San Francisco, California",2016,https://aifi.com/careers/
+376,Acely,Education & EdTech,"San Francisco, California",2017,https://acely.com/careers
+377,Sonatus,Technology,"Sunnyvale, California",2018,https://sonatus.com/careers/
+378,Decimal,Business Products & Software Services,"Indianapolis, Indiana",2020,https://decimal.com/careers
+379,Messari,Finance,"New York, New York",2018,https://messari.io/careers
+380,Cyware,Security,"Jersey City, New Jersey",2016,https://cyware.com/careers
+381,Pryon,Technology,"Raleigh, North Carolina",2017,https://pryon.com/careers/
+382,Pathstream,Education & EdTech,"San Francisco, California",2018,https://pathstream.com/careers/
+383,Apiiro,Security,"New York, New York",2018,https://apiiro.com/careers/
+384,Yugabyte,Technology,"Sunnyvale, California",2016,https://www.yugabyte.com/company/careers/
+385,Pipe,Finance,"San Francisco, California",2019,https://pipe.com/careers
+386,Wisetack,Finance,"San Francisco, California",2018,https://wisetack.com/careers
+387,BrightInsight,Healthcare,"San Jose, California",2017,https://brightinsight.com/careers/
+388,All Care Therapies,Healthcare,"Chatsworth, California",2019,https://allcaretherapies.com/careers
+389,Appsmith,Business Products & Software Services,"San Francisco, California",2019,https://www.appsmith.com/careers
+390,Haystack,Business Products & Software Services,"Los Angeles, California",2018,https://www.haystack.ai/careers
+391,Synctera,Finance,"San Francisco, California",2020,https://synctera.com/careers/
+392,Relay Payments,Finance,"Atlanta, Georgia",2019,https://relaypayments.com/careers/
+393,Modern Treasury,Finance,"San Francisco, California",2018,https://moderntreasury.com/careers
+394,Dandelion Energy,Energy & Resources,"Somerville, Massachusetts",2017,https://www.dandelionenergy.com/careers
+395,ZEDEDA,Business Products & Software Services,"San Jose, California",2016,https://zededa.com/careers/
+396,Zylo,Business Products & Software Services,"Indianapolis, Indiana",2016,https://zylo.com/company/careers/
+397,Malbek,Business Products & Software Services,"Princeton, New Jersey",2017,https://malbek.io/careers/
+398,Restor3d,Healthcare,"Durham, North Carolina",2017,https://restor3d.com/careers/
+399,Rain (California),Finance,"Santa Monica, California",2019,https://rain.com/careers
+400,Osso VR,Education & EdTech,"San Francisco, California",2016,https://ossovr.com/careers/
+401,Hammerspace,Business Products & Software Services,"Redwood City, California",2018,https://hammerspace.com/careers/
+402,Sirona Medical,Healthcare,"San Francisco, California",2018,https://sironamedical.com/careers/
+403,OpsMx,Security,"Sunnyvale, California",2017,https://www.opsmx.com/careers/
+404,Fundraise Up,Business Products & Software Services,"Brooklyn, New York",2017,https://fundraiseup.com/careers/
+405,RenoFi,Finance,"Berwyn, Pennsylvania",2018,https://renofi.com/careers/
+406,Cloudperitus,Professional Services,"San Ramon, California",2018,https://cloudperitus.com/careers
+407,AKASA,Healthcare,"South San Francisco, California",2018,https://akasa.com/careers/
+408,Meitheal Pharmaceuticals,Biotechnology & Agriculture,"Chicago, Illinois",2017,https://meitheal.com/careers/
+409,Ontic,Security,"Austin, Texas",2017,https://www.ontic.co/careers
+410,CometChat,Communication & Social,"Denver, Colorado",2019,https://www.cometchat.com/company/careers
+411,Ossium Health,Biotechnology & Agriculture,"San Francisco, California",2016,https://www.ossiumhealth.com/careers
+412,Homebound,Real Estate,"San Francisco, California",2018,https://homebound.com/careers
+413,Rho Business Banking,Finance,"New York, New York",2018,https://rho.co/careers
+414,Gabb,Business Products & Software Services,"Lehi, Utah",2018,https://gabb.com/careers
+415,Jobot,Business Products & Software Services,"Newport Beach, California",2018,https://jobot.com/careers
+416,Parallel Domain,Technology,"San Francisco, California",2017,https://paralleldomain.com/careers/
+417,Sagent,Technology,"Dallas, Texas",2018,https://sagent.com/careers/
+418,A2 Biotherapeutics,Biotechnology & Agriculture,"Agoura Hills, California",2018,https://www.a2biotherapeutics.com/careers
+419,FreeWill,Professional Services,"New York, New York",2016,https://freewill.com/careers
+420,Certa,Business Products & Software Services,"Saratoga, California",2019,https://www.getcerta.com/careers
+421,Dexterity,Robotics/Engineering,"Redwood City, California",2017,https://www.dexterity.ai/careers
+422,CoreStack,Technology,"Bellevue, Washington",2016,https://corestack.io/company/careers/
+423,Forum Health,Healthcare,"Flint, Michigan",2019,https://forumhealth.com/careers/
+424,Crux,Business Products & Software Services,"San Francisco, California",2017,https://crux.com/careers
+425,Airspace,Business Products & Software Services,"Carlsbad, California",2016,https://airspace.com/careers
+426,Tilt Finance,Finance,"San Francisco, California",2016,https://tilt.finance/careers
+427,Kalungi,Business Products & Software Services,"Seattle, Washington",2018,https://kalungi.com/careers
+428,Partner Therapeutics,Healthcare,"Lexington, Massachusetts",2017,https://partntx.com/careers
+429,Sense,Business Products & Software Services,"San Francisco, California",2016,https://www.sensehq.com/careers
+430,Route,Business Products & Software Services,"Lehi, Utah",2018,https://route.com/careers
+431,Flockjay,Technology,"Covina, California",2018,https://flockjay.com/careers
+432,Gauntlet,Finance,"New York, New York",2018,https://gauntlet.network/careers
+433,Material Bank,Finance,"Miami, Florida",2018,https://www.materialbank.com/careers
+434,Trust & Will,Real Estate,"San Diego, California",2017,https://trustandwill.com/careers
+435,Tekion,Technology,"Pleasanton, California",2016,https://tekion.com/careers
+436,Krista Software,Business Products & Software Services,"Dallas, Texas",2016,https://krista.ai/careers/
+437,Insite AI,Technology,"Bentonville, Arkansas",2019,https://insiteai.com/careers
+438,HqO,Real Estate,"Boston, Massachusetts",2018,https://www.hqo.com/careers
+439,Balto,Technology,"St Louis, Missouri",2017,https://www.balto.ai/careers/
+440,Pie Insurance,Finance,"Washington, District of Columbia",2017,https://pieinsurance.com/careers/
+441,Pixis,Technology,"New York, New York",2020,https://pixis.ai/careers/
+442,Capital Rx,Healthcare,"New York, New York",2017,https://capitalrx.com/careers/
+443,Bindable,Finance,"Boston, Massachusetts",2018,https://www.bindable.com/careers
+444,INCOG BioPharma,Biotechnology & Agriculture,"Fishers , Indiana",2020,https://incogbiopharma.com/careers/
+445,Deepen AI,Technology,"San Jose, California",2017,https://deepenai.com/careers
+446,Blockdaemon,Finance,"Los Angeles, California",2017,https://blockdaemon.com/careers/
+447,EcoFlow Tech,Energy & Resources,"Seattle, Washington",2016,https://www.ecoflow.com/us/careers
+448,Privacera,Security,"Newark, California",2016,https://privacera.com/careers/
+449,SpecterOps,Security,"Seattle, Washington",2017,https://specterops.io/careers/
+450,Bungalow,Real Estate,"Miami, Florida",2016,https://bungalow.com/careers
+451,Bolay Enterprises,Hospitality,"West Palm Beach, Florida",2016,https://bolay.com/careers
+452,Imubit,Energy & Resources,"Houston , Texas",2016,https://imubit.com/careers/
+453,Fortanix,Security,"Mountain View, California",2016,https://fortanix.com/careers
+454,Shipwell,Transportation & Logistics,"Austin, Texas",2016,https://shipwell.com/careers/
+455,Origin,Finance,"Boston, Massachusetts",2018,https://useorigin.com/careers
+456,Tendo,Healthcare,"Philadelphia, Pennsylvania",2020,https://www.tendo.com/careers
+457,Inari,Biotechnology & Agriculture,"Cambridge, Massachusetts",2016,https://inari.com/careers
+458,Gravy,Finance,"Alpharetta, Georgia",2017,https://joingravy.com/careers
+459,Nirvana Insurance,Finance,"San Francisco, California",2021,https://nirvanainsurance.com/careers/
+460,Prefect,Technology,"Washington, District of Columbia",2018,https://prefect.io/company/careers/
+461,CreditNinja,Finance,"Chicago, Illinois",2017,https://creditninja.com/careers
+462,Quo,Technology,"San Francisco, California",2018,https://getquo.com/careers
+463,Proper AI,Real Estate,"San Francisco, California",2017,https://www.properai.com/careers
+464,SV Academy,Education & EdTech,"San Francisco, California",2017,https://svacademy.com/careers/
+465,Talview,Technology,"San Mateo, California",2017,https://www.talview.com/careers
+466,Branch Insurance,Finance,"Minneapolis, Minnesota",2017,https://www.ourbranch.com/careers
+467,Lightbits,Business Products & Software Services,"San Jose, California",2016,https://lightbitslabs.com/careers/
+468,Check Technologies,Business Products & Software Services,"New York, New York",2019,https://checkhq.com/careers
+469,IoTeX,Technology,"Menlo Park, California",2017,https://iotex.io/careers
+470,Champ,Business Products & Software Services,"Cleveland, Ohio",2018,https://champtitles.com/careers
+471,BreachLock,Security,"New York, New York",2019,https://breachlock.com/careers/
+472,Syzygy Plasmonics,Hardware & Electronics,"Houston, Texas",2017,https://www.syzygyplasmonics.com/careers
+473,KUDO,Business Products & Software Services,"New York, New York",2017,https://kudoway.com/careers/
+474,Block Renovation,Real Estate,"Brooklyn, New York",2017,https://www.blockrenovation.com/careers
+475,Doxel,Technology,"Menlo Park, California",2016,https://doxel.ai/careers/
+476,WorkOS,Business Products & Software Services,"San Francisco, California",2019,https://workos.com/careers
+477,Fairmarkit,Business Products & Software Services,"Boston, Massachusetts",2017,https://fairmarkit.com/careers/
+478,Forma,Business Products & Software Services,"San Francisco, California",2017,https://forma.ai/careers
+479,Codoxo,Healthcare,"Duluth, Georgia",2017,https://www.codoxo.com/careers
+480,ElevateBio,Biotechnology & Agriculture,"Waltham, Massachusetts",2017,https://elevatebio.com/careers/
+481,CaptivateIQ,Business Products & Software Services,"San Francisco, California",2017,https://www.captivateiq.com/careers
+482,SOCRadar,Security,"Newark, Delaware",2018,https://socradar.io/careers/
+483,RealWork Labs,Business Products & Software Services,"Austin, Texas",2020,https://realworklabs.com/careers
+484,Supportiv,Lifestyle & Health,"Berkeley, California",2018,https://supportiv.com/careers
+485,Capsida Biotherapeutics,Biotechnology & Agriculture,"Newbury Park, California",2019,https://capsida.com/careers
+486,Axiom Space,Manufacturing,"Houston, Texas",2016,https://axiomspace.com/careers/
+487,Tangram Flex,Security,"Dayton, Ohio",2018,https://www.tangramflex.com/careers
+488,Influ2,Advertising & Marketing,"New York, New York",2017,https://influ2.com/careers/
+489,Guidehealth,Healthcare,"Dallas, Texas",2023,https://guidehealth.com/careers
+490,Sweet,Media & Entertainment,"New York, New York",2017,https://sweetanalytics.com/careers
+491,Novata,Business Products & Software Services,"New York, New York",2021,https://novata.com/careers
+492,GrowthAssistant,Professional Services,"Creve Coeur, Missouri",2021,https://growthassistant.com/careers
+493,Obsidian Security,Security,"Newport Beach, California",2017,https://www.obsidiansecurity.com/careers/
+494,WAi Technologies,Business Products & Software Services,"Santa Clara, California",2016,https://wai.tech/careers
+495,PostPilot,Advertising & Marketing,"New York, New York",2021,https://postpilot.com/careers
+496,Solo.io,Technology,"Cambridge, Massachusetts",2017,https://www.solo.io/company/careers/
+497,Unit21,Security,"San Francisco, California",2018,https://unit21.ai/careers/
+498,Class Technologies,Education & EdTech,"Washington, Washington",2020,https://class.com/careers/
+499,Tomo,Finance,"New York, New York",2020,https://tomo.com/careers
+500,Versatile,Business Products & Software Services,"Los Altos, California",2016,https://versatile.ai/careers/
