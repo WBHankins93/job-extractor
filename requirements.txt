@@ -1,0 +1,7 @@
+pandas==2.2.3
+httpx==0.28.1
+sentence-transformers==3.4.1
+chromadb==0.6.3
+huggingface-hub==0.29.3
+llama-index-core==0.12.22
+python-dotenv==1.0.1

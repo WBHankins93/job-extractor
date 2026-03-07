@@ -1,0 +1,21 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Environment — never commit tokens
+.env
+
+# Generated / local data
+data/chroma/
+output/
+
+# Resumes — personal data, never commit
+resume/
+
+# macOS
+.DS_Store
