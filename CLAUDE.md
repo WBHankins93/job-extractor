@@ -15,6 +15,47 @@
 
 ## Project Context
 
-**Project:** job extractor
-**Stack:** Python
-**Description:** job extractor tool using company URLs
+**Project:** Job Extractor — automated job-match pipeline for 500 Forbes Best Startup Employers
+**Stack:** Python 3.12+, httpx (async), pandas, fastembed (BAAI/bge-small-en-v1.5), ChromaDB, pypdf
+
+### Commands
+
+```bash
+# Full setup
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env   # add HF_TOKEN (free at huggingface.co/settings/tokens)
+
+# Pipeline — run in order
+python main.py                               # detect ATS + fetch jobs → output/results.csv
+python scripts/export_remote_roles.py        # filter remote=True → output/remote-roles.csv
+python scripts/fetch_jds_and_rescore.py      # fetch full JDs + rescore → output/rescored-jobs.csv
+python scripts/report_found_unfound.py       # print summary stats (no network calls)
+```
+
+### Architecture
+
+```
+pipeline/ingest.py    — CSV ingestion, validation, TARGET_ROLES list
+pipeline/ats.py       — 3-pass ATS detection: URL fast-path → HTML fingerprint → slug guessing
+pipeline/embed.py     — fastembed embeddings, ChromaDB vector store, score_job_fit()
+main.py               — orchestrator: detect → fetch → match → score → results.csv
+scripts/              — post-processing: export, rescore with full JDs, summary stats
+data/                 — Forbes source CSV (500 companies)
+resume/               — 3 PDF resumes (gitignored)
+output/               — generated CSVs (gitignored)
+data/chroma/          — ChromaDB persist dir (gitignored)
+```
+
+### Key Patterns & Gotchas
+
+- **ATS platforms:** Greenhouse, Lever, Ashby, SmartRecruiters, Workable. 3-pass slug guessing in `pipeline/ats.py` handles React/SPA career pages that hide job links from HTML.
+- **Semaphore limits:** `Semaphore(40)` in `main.py` for ATS detection; `Semaphore(20)` + `Semaphore(15)` in `fetch_jds_and_rescore.py` for JD fetches. Lower if rate-limited.
+- **CSV booleans:** pandas reads CSV `True/False` as Python bools, not strings. Use `df["remote"] == True`, not `== "True"`.
+- **Resume → role mapping** (`pipeline/embed.py`):
+  - Full Stack / Software Engineer → `Ben_Hankins_Full_Stack.pdf`
+  - Solutions / Forward Deployed Engineer → `Ben_Hankins_Solutions_feb26.pdf`
+  - Technical Product Manager → `Ben_Hankins_TPM.pdf`
+- **Fit score:** cosine similarity 0–1 via ChromaDB. 0.85+ is a strong match. `main.py` scores title+location only; `fetch_jds_and_rescore.py` scores full JD text.
+- **output/ is gitignored** — CSVs are never committed. Run the pipeline locally to regenerate.
+- **HF_TOKEN** is required for fastembed model download on first run (~33MB, cached after).
