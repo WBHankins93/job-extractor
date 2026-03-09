@@ -53,12 +53,20 @@ async def process_companies(df: pd.DataFrame, resume_collection) -> pd.DataFrame
         follow_redirects=True,
     ) as client:
 
-        # --- Stage 1: ATS detection (concurrent, fetches all career pages at once) ---
+        # --- Stage 1: ATS detection (concurrent, throttled to avoid hammering ATS probe APIs) ---
         print("Detecting ATS platforms...")
         df["ats"] = None
         df["api_url"] = None
 
-        detect_tasks = [detect_ats(row["career_url"], client) for _, row in df.iterrows()]
+        # Semaphore limits concurrent detections to prevent thundering-herd on probe APIs
+        # (slug-guessing probes hit greenhouse/lever/ashby/etc. for every unknown company)
+        sem = asyncio.Semaphore(40)
+
+        async def detect_throttled(url: str) -> tuple:
+            async with sem:
+                return await detect_ats(url, client)
+
+        detect_tasks = [detect_throttled(row["career_url"]) for _, row in df.iterrows()]
         detect_results = await asyncio.gather(*detect_tasks)
 
         for idx, (ats, api_url) in zip(df.index, detect_results):
@@ -152,11 +160,22 @@ def save_output(df: pd.DataFrame) -> None:
     matches = df[df["match"] == "✓"].copy()
     matches = matches.sort_values("fit_score", ascending=False)
 
+    found = len(matches)
+    unfound = len(df) - found
+
+    # Breakdown of unfound: why each company has no match
+    unknown_ats = (df["ats"] == "unknown").sum()
+    known_no_jobs = ((df["ats"] != "unknown") & df["remote"].isna()).sum()
+    no_remote = ((df["ats"] != "unknown") & (df["remote"] == False)).sum()
+    remote_no_role = ((df["ats"] != "unknown") & (df["remote"] == True) & (df["match"] != "✓")).sum()
+
     print(f"\n=== Results ===")
     print(f"Total companies processed: {len(df)}")
     print(f"Companies with known ATS:  {(df['ats'] != 'unknown').sum()}")
     print(f"Companies offering remote: {df['remote'].sum()}")
-    print(f"Companies with role match: {len(matches)}")
+    print(f"Companies with role match: {found}")
+    print(f"Unfound: {unfound}")
+    print(f"  unknown ATS: {unknown_ats}, known ATS no jobs: {known_no_jobs}, no remote: {no_remote}, remote but no role: {remote_no_role}")
 
     if len(matches):
         print(f"\nTop matches by fit score:")
