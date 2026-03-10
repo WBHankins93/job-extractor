@@ -16,6 +16,9 @@ Columns: source, company, job_title, job_url, location, remote,
 import asyncio
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import httpx
 import pandas as pd
