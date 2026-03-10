@@ -17,6 +17,20 @@ import httpx
 from urllib.parse import urlparse
 
 
+def _is_remote(location_str: str | None, remote_flag: bool | None = None) -> bool:
+    """Normalize remote detection across ATS platforms.
+
+    Prefer an explicit platform boolean (isRemote, telecommuting, etc.) when
+    available; fall back to keyword scanning of the location string.
+    """
+    if remote_flag is not None:
+        return bool(remote_flag)
+    if not location_str:
+        return False
+    loc = location_str.lower()
+    return any(kw in loc for kw in ["remote", "distributed", "anywhere", "work from home", "wfh"])
+
+
 # -------------------------------------------------------------------
 # ATS URL builders
 # Used when the career URL IS the ATS URL (direct link).
@@ -243,7 +257,7 @@ def _parse_greenhouse(data: dict) -> list[dict]:
         {
             "title":    j.get("title", ""),
             "location": j.get("location", {}).get("name", ""),
-            "remote":   "remote" in j.get("location", {}).get("name", "").lower(),
+            "remote":   _is_remote(j.get("location", {}).get("name")),
             "url":      j.get("absolute_url", ""),
         }
         for j in jobs
@@ -255,7 +269,7 @@ def _parse_lever(data: list) -> list[dict]:
         {
             "title":    j.get("text", ""),
             "location": j.get("categories", {}).get("location", ""),
-            "remote":   "remote" in j.get("categories", {}).get("location", "").lower(),
+            "remote":   _is_remote(j.get("categories", {}).get("location")),
             "url":      j.get("hostedUrl", ""),
         }
         for j in data
@@ -294,9 +308,9 @@ def _parse_workable(data: dict) -> list[dict]:
         {
             "title":    j.get("title", ""),
             "location": j.get("location", {}).get("location_str", ""),
-            "remote":   (
-                j.get("location", {}).get("telecommuting", False)
-                or "remote" in j.get("location", {}).get("location_str", "").lower()
+            "remote":   _is_remote(
+                j.get("location", {}).get("location_str"),
+                j.get("location", {}).get("telecommuting"),
             ),
             "url":      j.get("url", ""),
         }
@@ -313,12 +327,57 @@ PARSERS = {
 }
 
 
+async def _fetch_paged_smartrecruiters(api_url: str, client: httpx.AsyncClient) -> list[dict]:
+    """Paginate SmartRecruiters postings endpoint until all jobs are fetched."""
+    all_raw: list[dict] = []
+    limit = 100
+    offset = 0
+    while True:
+        resp = await client.get(f"{api_url}?limit={limit}&offset={offset}", timeout=10.0)
+        resp.raise_for_status()
+        data = resp.json()
+        batch = data.get("content", [])
+        all_raw.extend(batch)
+        total = data.get("totalFound", 0)
+        offset += limit
+        if offset >= total or not batch:
+            break
+    return _parse_smartrecruiters({"content": all_raw})
+
+
+async def _fetch_paged_workable(api_url: str, client: httpx.AsyncClient) -> list[dict]:
+    """Paginate Workable jobs endpoint via since_id cursor until all jobs are fetched."""
+    all_raw: list[dict] = []
+    since_id: str | None = None
+    while True:
+        url = f"{api_url}?details=true&count=50"
+        if since_id:
+            url += f"&since_id={since_id}"
+        resp = await client.get(url, timeout=10.0)
+        resp.raise_for_status()
+        data = resp.json()
+        batch = data.get("results", [])
+        all_raw.extend(batch)
+        if not batch or not data.get("has_more"):
+            break
+        last_shortcode = batch[-1].get("shortcode")
+        if not last_shortcode:
+            break
+        since_id = last_shortcode
+    return _parse_workable({"results": all_raw})
+
+
 async def fetch_jobs(ats_name: str, api_url: str, client: httpx.AsyncClient) -> list[dict]:
     """
     Fetch job listings from an ATS API and return normalized job dicts.
+    Paginates automatically for SmartRecruiters and Workable.
     Silently returns [] on any failure — a dead company page shouldn't crash the pipeline.
     """
     try:
+        if ats_name == "smartrecruiters":
+            return await _fetch_paged_smartrecruiters(api_url, client)
+        if ats_name == "workable":
+            return await _fetch_paged_workable(api_url, client)
         response = await client.get(api_url, timeout=10.0)
         response.raise_for_status()
         parser = PARSERS.get(ats_name)
