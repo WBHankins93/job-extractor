@@ -19,37 +19,32 @@ using semantic embeddings, not keyword luck.
 
 ## 🧠 How It Works
 
-The pipeline runs in two stages. Each one gets you closer to the signal and further from the noise.
+Two source tracks run in parallel and merge into one ranked output.
 
 ```
-📋 Forbes CSV (500 companies)
-        │
-        ▼  python main.py
-┌───────────────────────────────────┐
-│  1. 🔍 ATS Detect                 │  3-pass: URL → HTML → slug probe
-│  2. 📥 Job Fetch                  │  Greenhouse · Lever · Ashby · SmartRecruiters · Workable
-│  3. 🎯 Role Match                 │  Remote only · 5 target roles
-│  4. 🤖 Resume Score               │  Cosine similarity (BAAI/bge-small-en-v1.5)
-└────────┬──────────────────────────┘
-         │
-         ▼
-  📄 output/results.csv  (500 rows, all companies)
-         │
-         ▼  python scripts/export_remote_roles.py
-  📄 output/remote-roles.csv  (remote=True companies only)
-         │
-         ▼  python scripts/fetch_jds_and_rescore.py
-┌───────────────────────────────────┐
-│  5. 🔄 Re-detect ATS              │  Recover api_url for remote companies
-│  6. 📖 Fetch Full JD              │  Per-job API calls where needed
-│  7. ⚡ Rescore                    │  Full JD text vs resume (not just title)
-└────────┬──────────────────────────┘
-         │
-         ▼
-  🏆 output/rescored-jobs.csv  (one row per job, sorted by fit_score_jd)
+📋 Forbes CSV (500 companies)                  🌐 Job Boards
+        │                                      (Levels.fyi · YC · Getro · HN · hiring.cafe)
+        ▼  main.py                                      │
+┌───────────────────────────────────┐                   ▼  fetch_board_jobs.py
+│  1. 🔍 ATS Detect                 │         ┌─────────────────────────┐
+│  2. 📥 Job Fetch                  │         │  Fetch remote listings  │
+│  3. 🎯 Role Match + Score         │         │  Role match + score     │
+└────────┬──────────────────────────┘         └──────────┬──────────────┘
+         │                                               │
+         ▼  export_remote_roles.py                       │
+  remote-roles.csv                                       │
+         │                                               │
+         ▼  fetch_jds_and_rescore.py                     │
+  rescored-jobs.csv  ←──────────────────────────────────┘
+  (full JD scoring)           board-jobs.csv · founding-jobs.csv
+         │                               │
+         └───────────┬───────────────────┘
+                     ▼  merge_results.py
+             🏆 output/all-jobs.csv
+             (unified · deduped · sorted by score)
 ```
 
-> **Last run:** 495/500 companies detected · 155 remote · 182 role-matched jobs · top score: **0.885**
+> **Last run:** 495/500 companies detected · 273 role-matched jobs · top score: **88.2**
 
 ---
 
@@ -76,7 +71,30 @@ cp .env.example .env
 
 ## 🚀 Commands
 
-### `python main.py` — Run the full pipeline
+### One-command pipeline (recommended)
+
+```bash
+./run_pipeline.sh           # Full run: ATS scan + boards + merge (~15 min)
+./run_pipeline.sh --boards  # Boards only: skip ATS stages (~2 min)
+```
+
+`run_pipeline.sh` runs all stages in order and ends with a merged `output/all-jobs.csv`.
+
+---
+
+### Manual stage-by-stage
+
+```bash
+python main.py                              # ATS detect + fetch + role match + score
+python scripts/export_remote_roles.py       # Filter remote=True → remote-roles.csv
+python scripts/fetch_jds_and_rescore.py     # Fetch full JDs + rescore → rescored-jobs.csv
+python scripts/fetch_board_jobs.py          # Levels, YC, Getro, HN, hiring.cafe → board-jobs.csv
+python scripts/merge_results.py             # Merge all outputs → all-jobs.csv
+```
+
+---
+
+### `python main.py` — ATS scan
 
 Detects ATS, fetches live jobs, matches roles, scores against your resume. Downloads the embedding model on first run (~33MB, cached after). Takes 3–5 minutes for 500 companies.
 
@@ -95,73 +113,96 @@ Saved → output/results.csv
 
 ---
 
-### `python scripts/export_remote_roles.py` — Filter remote companies
-
-Reads `output/results.csv` and saves every company with remote positions to a clean, focused file.
-
-```
-Saved 155 remote companies → output/remote-roles.csv
-  67 with role match (✓), 88 without
-```
-
----
-
 ### `python scripts/fetch_jds_and_rescore.py` — Deep rescore with full JDs
 
-The real magic. Fetches the complete job description for every remote listing and re-scores fit using the full JD text — not just the title. Surfaces hidden matches that keyword filtering misses.
+Fetches the complete job description for every remote listing and re-scores fit using the full JD text — not just the title. Surfaces hidden matches that keyword filtering misses.
 
 - **Greenhouse / Lever** — JD content is free in the batch API response (zero extra calls)
 - **Ashby / SmartRecruiters / Workable** — one targeted API call per job
-- Scores **all** remote companies, including those without an exact title match
-
-```
-Total remote jobs: 1566
-  737/1566 had full JD fetched
-  182/1566 matched a target role keyword
-
-Top 5 by fit_score_jd:
-  Solo.io       Senior Customer Success Engineer   0.885 ✨
-  Solo.io       Open Source Evangelist             0.884
-  Drata         Senior Solutions Engineer          0.882
-  Solo.io       RevOps Engineer                    0.882
-  Mighty Networks  Sr. Software Engineer, DevOps   0.872
-```
 
 ---
 
-### `python scripts/report_found_unfound.py` — Print summary stats
+### `python scripts/fetch_board_jobs.py` — Board sources
 
-Quick snapshot of the last run — no network calls, instant output.
+Pulls jobs from external boards and scores them with the same embedding pipeline.
+
+| Source | What it covers |
+|--------|---------------|
+| Levels.fyi | Comp-transparent roles at known tech companies |
+| YC Work at a Startup | YC-backed companies actively hiring |
+| Getro | VC portfolio job networks |
+| HN Who's Hiring | Monthly Hacker News hiring thread |
+| hiring.cafe | Curated remote-friendly listings |
+
+---
+
+### `python scripts/merge_results.py` — Unified output
+
+Merges all three source CSVs, deduplicates by company + URL, sorts by score, and writes `output/all-jobs.csv` — the only file you need to open.
 
 ```
-=== Found vs Unfound (from output/results.csv) ===
-Total companies: 500
-Found (role match): 67
-Unfound: 433
-  unknown ATS: 5 · known ATS no jobs: 366 · no remote: 36 · remote but no role: 26
+  rescored-jobs:   273 rows
+  board-jobs:      142 rows
+
+  415 total → 12 duplicates removed → 403 unique jobs
+
+Top 10 by score:
+        Company                                 Title                      Role  Score
+        ClickUp  Senior Solutions Engineer, Enterprise      Solutions Engineer   88.2
+          Drata  Senior Solutions Engineer, Enterprise      Solutions Engineer   88.2
 ```
 
 ---
 
 ## 📁 Output Files
 
-| File | Rows | What's inside |
-|------|------|----------------|
-| `output/results.csv` | 500 | Every company — ATS, remote flag, role match, fit score |
-| `output/remote-roles.csv` | ~155 | Remote-only filtered view |
-| `output/rescored-jobs.csv` | ~1,500+ | One row per job, sorted by `fit_score_jd` |
+| File | What's inside |
+|------|----------------|
+| `output/all-jobs.csv` | **Primary output** — unified, deduped, sorted by score |
+| `output/rescored-jobs.csv` | ATS-sourced jobs scored against full JD text |
+| `output/board-jobs.csv` | Board-sourced jobs (Levels, YC, Getro, HN, hiring.cafe) |
+| `output/founding-jobs.csv` | Founding engineer roles from board sources |
+| `output/results.csv` | All 500 companies — ATS detection, remote flag, role match |
+| `output/remote-roles.csv` | Remote-only filtered view (input to rescore stage) |
 
-> ⚠️ Output files are **gitignored** — they're generated data, not source code. Run the pipeline locally to populate them.
+> ⚠️ Output files are **gitignored** — run the pipeline locally to populate them.
 
-**Key columns:**
+**Columns in `all-jobs.csv`:**
 
 | Column | Description |
 |--------|-------------|
-| `match` | `✓` if the company has a remote opening matching a target role |
-| `fit_score` | Cosine similarity (0–1) between job title and your resume |
-| `fit_score_jd` | Cosine similarity using the **full job description** text |
-| `jd_found` | Whether a full JD was successfully fetched |
-| `resume_used` | Which of your PDFs scored highest for that role |
+| `Company` | Employer name |
+| `Title` | Job title |
+| `URL` | Direct link to the job posting |
+| `Role` | Role bucket (Software Engineer, Solutions Engineer, etc.) |
+| `Level` | senior · staff · mid · junior |
+| `Score` | Fit score as a percentage (`88.2` = strong match) |
+| `Source` | ATS name or board (ashby · greenhouse · levels · yc…) |
+| `Location` | Location string — populated from board sources |
+| `Posted` | Post date — populated from board sources |
+| `Salary Min/Max` | Salary range — populated from board sources |
+
+---
+
+## ⏰ Automation
+
+Install cron jobs to run the pipeline automatically — no manual triggering needed.
+
+```bash
+./setup_cron.sh
+```
+
+**Schedule installed:**
+
+| Days | Time | What runs |
+|------|------|-----------|
+| Tue + Fri | 11am | Full pipeline — ATS scan + boards (~15 min) |
+| Mon + Wed + Thu | 11am | Boards only — fast refresh (~2 min) |
+
+Log tails to `~/job-extractor-cron.log`. Live watch: `tail -f ~/job-extractor-cron.log`
+
+> **macOS note:** cron needs Full Disk Access to read your home directory.
+> System Settings → Privacy & Security → Full Disk Access → add `/usr/sbin/cron`
 
 ---
 
@@ -186,6 +227,8 @@ The pipeline matches jobs against these title substrings (case-insensitive):
 ```
 job-extractor/
 ├── 🎬 main.py                        # Pipeline orchestrator
+├── 🚀 run_pipeline.sh                # One-command runner (all stages)
+├── ⏰ setup_cron.sh                  # Install automated cron schedule
 ├── 📦 requirements.txt
 │
 ├── pipeline/
@@ -196,6 +239,8 @@ job-extractor/
 ├── scripts/
 │   ├── export_remote_roles.py        # Filter remote companies → CSV
 │   ├── fetch_jds_and_rescore.py      # Full JD fetch + deep rescore
+│   ├── fetch_board_jobs.py           # Levels · YC · Getro · HN · hiring.cafe
+│   ├── merge_results.py              # Unify all outputs → all-jobs.csv
 │   └── report_found_unfound.py       # Summary stats from last run
 │
 ├── data/
@@ -204,9 +249,12 @@ job-extractor/
 │
 ├── resume/                           # 🔒 Drop your PDFs here (gitignored)
 └── output/                           # 📊 Generated on each run (gitignored)
+    ├── all-jobs.csv                  # ← Open this one
+    ├── rescored-jobs.csv
+    ├── board-jobs.csv
+    ├── founding-jobs.csv
     ├── results.csv
-    ├── remote-roles.csv
-    └── rescored-jobs.csv
+    └── remote-roles.csv
 ```
 
 ---
@@ -240,7 +288,8 @@ Job Description  →  text  →  384-dim vector  ┘
 - **Model:** [`BAAI/bge-small-en-v1.5`](https://huggingface.co/BAAI/bge-small-en-v1.5) — 33MB, runs on CPU
 - **Stage 1 scoring** (`main.py`): uses job title + location
 - **Stage 2 scoring** (`fetch_jds_and_rescore.py`): uses full job description text
-- **Score interpretation:** `0.85+` = strong match · `0.80–0.85` = worth a look · `< 0.75` = likely off-target
+- **Score in `all-jobs.csv`:** displayed as a percentage (`88.2` = 0.882 cosine similarity)
+- **Interpretation:** `85+` = strong match · `75–85` = worth a look · `< 75` = likely off-target
 
 ---
 
