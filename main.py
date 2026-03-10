@@ -12,7 +12,7 @@ import pandas as pd
 import httpx
 from pathlib import Path
 
-from pipeline.ingest import load_companies, TARGET_ROLES
+from pipeline.ingest import load_companies, TARGET_ROLES, matches_target_role, parse_level
 from pipeline.ats import detect_ats, fetch_jobs
 from pipeline.embed import (
     load_resumes, get_chroma_client, build_resume_collection,
@@ -42,18 +42,6 @@ def _is_fresh(posted_at: str) -> bool:
     except (ValueError, TypeError):
         return True
 
-
-def matches_target_role(title: str) -> str | None:
-    """
-    Check if a job title matches one of our 5 target roles.
-    Case-insensitive partial match — 'Senior Software Engineer' matches 'Software Engineer'.
-    Returns the matched role name, or None.
-    """
-    title_lower = title.lower()
-    for role in TARGET_ROLES:
-        if role.lower() in title_lower:
-            return role
-    return None
 
 
 async def process_companies(df: pd.DataFrame, resume_collection) -> pd.DataFrame:

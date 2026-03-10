@@ -25,15 +25,19 @@ def main() -> None:
 
     df = pd.read_csv(INPUT_CSV)
 
-    # remote column: pandas reads CSV booleans as Python True/False
-    remote = df[df["remote"] == True].copy()
+    # Only export companies that are remote AND matched a target role.
+    # Without the match filter, non-matched companies (match=NaN) flow into
+    # fetch_jds_and_rescore.py and can appear in the report via semantic
+    # similarity on unrelated job titles.
+    remote = df[(df["remote"] == True) & (df["match"] == "✓")].copy()
 
     remote.to_csv(OUTPUT_CSV, index=False)
 
-    print(f"Saved {len(remote)} remote companies → {OUTPUT_CSV}")
-    if len(remote):
-        matched = (remote["match"] == "✓").sum()
-        print(f"  {matched} with role match (✓), {len(remote) - matched} without")
+    print(f"Saved {len(remote)} remote+matched companies → {OUTPUT_CSV}")
+    all_remote = (df["remote"] == True).sum()
+    unmatched  = all_remote - len(remote)
+    if unmatched:
+        print(f"  (filtered out {unmatched} remote companies with no role match)")
 
 
 if __name__ == "__main__":

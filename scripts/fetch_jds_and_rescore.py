@@ -49,7 +49,7 @@ from pipeline.embed import (
     load_resumes,
     score_job_fit,
 )
-from pipeline.ingest import TARGET_ROLES
+from pipeline.ingest import matches_target_role, parse_level
 
 
 INPUT_CSV  = Path(__file__).resolve().parent.parent / "output" / "remote-roles.csv"
@@ -62,6 +62,7 @@ OUTPUT_COLUMNS = [
     "job_title",
     "job_url",
     "role_type",
+    "level",
     "resume_used",
     "fit_score_title",
     "fit_score_jd",
@@ -128,22 +129,6 @@ def extract_slug(ats: str, api_url: str) -> str | None:
         return parts[idx] or None
     except Exception:
         return None
-
-
-# -------------------------------------------------------------------
-# Role matching (mirrors main.py — partial case-insensitive substring)
-# -------------------------------------------------------------------
-
-def matches_target_role(title: str) -> str | None:
-    """
-    'Senior Software Engineer' → 'Software Engineer'
-    Returns the matched TARGET_ROLES entry, or None.
-    """
-    title_lower = title.lower()
-    for role in TARGET_ROLES:
-        if role.lower() in title_lower:
-            return role
-    return None
 
 
 # -------------------------------------------------------------------
@@ -351,15 +336,12 @@ async def process_company(
     # Step 4: Score each remote job
     async def process_job(job: dict) -> dict | None:
         role = matches_target_role(job["title"])
+        if not role:
+            return None  # skip non-target-role jobs entirely
 
-        # Decide which resumes to score against
-        if role:
-            mapped = ROLE_TO_RESUME.get(role)
-            resumes_to_try = [mapped] if mapped else all_resume_files
-        else:
-            # No keyword match — compare against all resumes, keep best
-            resumes_to_try = all_resume_files
-            role = "none"
+        # Decide which resume to score against
+        mapped = ROLE_TO_RESUME.get(role)
+        resumes_to_try = [mapped] if mapped else all_resume_files
 
         # Baseline: title + location only
         title_text = f"{job['title']} {job.get('location', '')}".strip()
@@ -398,6 +380,7 @@ async def process_company(
             "job_title":       job["title"],
             "job_url":         job.get("url", ""),
             "role_type":       role,
+            "level":           parse_level(job["title"]),
             "resume_used":     best_resume,
             "fit_score_title": round(fit_score_title, 3),
             "fit_score_jd":    round(fit_score_jd, 3),
