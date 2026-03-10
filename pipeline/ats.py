@@ -255,10 +255,11 @@ def _parse_greenhouse(data: dict) -> list[dict]:
     jobs = data.get("jobs", [])
     return [
         {
-            "title":    j.get("title", ""),
-            "location": j.get("location", {}).get("name", ""),
-            "remote":   _is_remote(j.get("location", {}).get("name")),
-            "url":      j.get("absolute_url", ""),
+            "title":     j.get("title", ""),
+            "location":  j.get("location", {}).get("name", ""),
+            "remote":    _is_remote(j.get("location", {}).get("name")),
+            "url":       j.get("absolute_url", ""),
+            "posted_at": j.get("posted_at", ""),
         }
         for j in jobs
     ]
@@ -267,10 +268,11 @@ def _parse_greenhouse(data: dict) -> list[dict]:
 def _parse_lever(data: list) -> list[dict]:
     return [
         {
-            "title":    j.get("text", ""),
-            "location": j.get("categories", {}).get("location", ""),
-            "remote":   _is_remote(j.get("categories", {}).get("location")),
-            "url":      j.get("hostedUrl", ""),
+            "title":     j.get("text", ""),
+            "location":  j.get("categories", {}).get("location", ""),
+            "remote":    _is_remote(j.get("categories", {}).get("location")),
+            "url":       j.get("hostedUrl", ""),
+            "posted_at": j.get("createdAt", ""),
         }
         for j in data
     ]
@@ -280,10 +282,11 @@ def _parse_ashby(data: dict) -> list[dict]:
     jobs = data.get("jobs", [])
     return [
         {
-            "title":    j.get("title", ""),
-            "location": j.get("location", ""),
-            "remote":   j.get("isRemote", False),
-            "url":      j.get("jobUrl", ""),
+            "title":     j.get("title", ""),
+            "location":  j.get("location", ""),
+            "remote":    j.get("isRemote", False),
+            "url":       j.get("jobUrl", ""),
+            "posted_at": j.get("createdAt", ""),
         }
         for j in jobs
     ]
@@ -293,10 +296,11 @@ def _parse_smartrecruiters(data: dict) -> list[dict]:
     jobs = data.get("content", [])
     return [
         {
-            "title":    j.get("name", ""),
-            "location": j.get("location", {}).get("city", ""),
-            "remote":   j.get("location", {}).get("remote", False),
-            "url":      j.get("ref", ""),
+            "title":     j.get("name", ""),
+            "location":  j.get("location", {}).get("city", ""),
+            "remote":    j.get("location", {}).get("remote", False),
+            "url":       j.get("ref", ""),
+            "posted_at": j.get("publishedDate", ""),
         }
         for j in jobs
     ]
@@ -306,13 +310,14 @@ def _parse_workable(data: dict) -> list[dict]:
     jobs = data.get("results", [])
     return [
         {
-            "title":    j.get("title", ""),
-            "location": j.get("location", {}).get("location_str", ""),
-            "remote":   _is_remote(
+            "title":     j.get("title", ""),
+            "location":  j.get("location", {}).get("location_str", ""),
+            "remote":    _is_remote(
                 j.get("location", {}).get("location_str"),
                 j.get("location", {}).get("telecommuting"),
             ),
-            "url":      j.get("url", ""),
+            "url":       j.get("url", ""),
+            "posted_at": j.get("created_at", ""),
         }
         for j in jobs
     ]
