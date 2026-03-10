@@ -60,10 +60,12 @@ def _truncate(url: str, max_len: int = 60) -> str:
 
 def _source_badge(source: str) -> Text:
     colors = {
-        "levels":  "bright_blue",
-        "yc":      "bright_yellow",
-        "getro":   "bright_magenta",
-        "ats":     "dim",
+        "levels":      "bright_blue",
+        "yc":          "bright_yellow",
+        "getro":       "bright_magenta",
+        "hiringcafe":  "bright_cyan",
+        "hnhiring":    "bright_green",
+        "ats":         "dim",
     }
     return Text(source.upper(), style=colors.get(source, "white"))
 

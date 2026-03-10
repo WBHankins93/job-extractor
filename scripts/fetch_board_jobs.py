@@ -25,7 +25,7 @@ from pipeline.embed import (
     load_resumes, get_chroma_client, build_resume_collection,
     score_job_fit, ROLE_TO_RESUME,
 )
-from pipeline.sources import levels, yc, getro
+from pipeline.sources import levels, yc, getro, hiringcafe, hnhiring
 from main import MAX_AGE_DAYS, _is_fresh
 
 OUTPUT_DIR   = Path("output")
@@ -43,11 +43,13 @@ async def run(resume_collection) -> list[dict]:
             levels.fetch_jobs(client),
             yc.fetch_jobs(client),
             getro.fetch_jobs(client),
+            hiringcafe.fetch_jobs(client),
+            hnhiring.fetch_jobs(client),
             return_exceptions=True,
         )
 
     all_jobs: list[dict] = []
-    names = ["levels", "yc", "getro"]
+    names = ["levels", "yc", "getro", "hiringcafe", "hnhiring"]
     for name, result in zip(names, results):
         if isinstance(result, Exception):
             print(f"  [{name}] error: {result}")
