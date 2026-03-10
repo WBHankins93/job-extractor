@@ -7,6 +7,8 @@ Reads the CSV, validates it, and returns a clean DataFrame.
 Everything downstream depends on this being correct.
 """
 
+import re
+
 import pandas as pd
 from pathlib import Path
 
@@ -20,6 +22,66 @@ TARGET_ROLES = [
     "Forward Deployed Engineer",
     "Technical Product Manager",
 ]
+
+# Titles matching this pattern are excluded from role matching.
+# Covers management track, over-senior IC (Staff/Principal), and leadership
+# roles — all inappropriate for a ≤6 year IC job search.
+_EXCLUDE_RE = re.compile(
+    r"\b(lead|manager|management|director|vp|vice[\s-]*president|"
+    r"head\s+of|chief|principal|staff|president|partner|"
+    r"cto|ceo|coo|cfo)\b",
+    re.I,
+)
+
+# Seniority label parsed from title for display in the report.
+_LEVEL_PATTERNS = [
+    ("junior", re.compile(r"\b(junior|jr\.?|entry.?level|associate)\b", re.I)),
+    ("senior", re.compile(r"\b(senior|sr\.?)\b",                        re.I)),
+]
+
+# Founding engineer regex — matches any "founding ... engineer" or
+# "engineer ... founding" variant regardless of word order.
+_FOUNDING_RE = re.compile(
+    r"\bfounding\b.*\bengineer\b|\bengineer\b.*\bfounding\b", re.I
+)
+
+
+def parse_level(title: str) -> str:
+    """Return 'junior', 'senior', or 'mid' (default for unlabeled IC roles)."""
+    for label, pattern in _LEVEL_PATTERNS:
+        if pattern.search(title):
+            return label
+    return "mid"
+
+
+def matches_target_role(title: str) -> str | None:
+    """
+    Return the matched TARGET_ROLES entry for `title`, or None.
+
+    Returns None for any management, lead, or over-senior-IC title.
+    Case-insensitive substring match — 'Senior Software Engineer' matches
+    'Software Engineer' because 'senior' isn't an excluded term; only
+    management/leadership terms are excluded.
+    """
+    if _EXCLUDE_RE.search(title):
+        return None
+    title_lower = title.lower()
+    for role in TARGET_ROLES:
+        if role.lower() in title_lower:
+            return role
+    return None
+
+
+def matches_founding_role(title: str) -> bool:
+    """
+    True if the title describes a Founding Engineer role that is NOT already
+    captured by matches_target_role() — e.g. standalone 'Founding Engineer'.
+
+    'Founding Full Stack Engineer' → already matched by matches_target_role()
+    so this returns False.  'Founding Engineer' → not matched by any target
+    role, so this returns True.
+    """
+    return bool(_FOUNDING_RE.search(title)) and matches_target_role(title) is None
 
 
 def load_companies(csv_path: str | Path) -> pd.DataFrame:
