@@ -16,9 +16,9 @@ Why this exists:
     and Workable, this script makes one additional API call per job to fetch
     the full description.
 
-    Companies with remote=True but no target role match (26 of the 93) are
-    also included here — their remote jobs are scored against all 3 resumes
-    so nothing slips through due to an inexact title match.
+    Only companies that matched a target role reach this script (upstream
+    filter in export_remote_roles.py). Per-job filtering via
+    matches_target_role() is applied again here as a second line of defence.
 
 Output:
     output/rescored-jobs.csv — one row per remote job, sorted by fit_score_jd
@@ -443,9 +443,7 @@ async def main() -> None:
     out.to_csv(OUTPUT_CSV, index=False)
 
     jd_count  = int(out["jd_found"].sum())
-    role_match = (out["role_type"] != "none").sum()
     print(f"  {jd_count}/{len(out)} had full JD fetched")
-    print(f"  {role_match}/{len(out)} matched a target role keyword")
     print(f"\nSaved → {OUTPUT_CSV}")
 
     print(f"\nTop 15 by fit_score_jd:")
