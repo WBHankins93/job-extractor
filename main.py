@@ -7,6 +7,7 @@ Run: python main.py
 """
 
 import asyncio
+from datetime import datetime, timezone, timedelta
 import pandas as pd
 import httpx
 from pathlib import Path
@@ -22,6 +23,24 @@ from pipeline.embed import (
 DATA_DIR   = Path("data")
 OUTPUT_DIR = Path("output")
 CSV_PATH   = DATA_DIR / "Forbes_Best_Startup_Employers_2026_FINAL.csv"
+
+# Jobs older than this are excluded. Set to None to disable.
+MAX_AGE_DAYS = 30
+_CUTOFF = datetime.now(timezone.utc) - timedelta(days=MAX_AGE_DAYS)
+
+
+def _is_fresh(posted_at: str) -> bool:
+    """Return True if the job was posted within MAX_AGE_DAYS (or date is unknown)."""
+    if not posted_at:
+        return True  # keep if date is missing — don't silently drop on bad data
+    try:
+        dt = datetime.fromisoformat(posted_at.replace("Z", "+00:00"))
+        # Lever returns millisecond epoch integers as strings sometimes
+        if not dt.tzinfo:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return dt >= _CUTOFF
+    except (ValueError, TypeError):
+        return True
 
 
 def matches_target_role(title: str) -> str | None:
@@ -95,9 +114,11 @@ async def process_companies(df: pd.DataFrame, resume_collection) -> pd.DataFrame
             has_remote = any(j["remote"] for j in jobs)
             df.at[idx, "remote"] = has_remote
 
-            # Collect all matching remote jobs with their titles
+            # Collect fresh, remote, target-role jobs
             matched_jobs = []
             for job in jobs:
+                if not _is_fresh(job.get("posted_at", "")):
+                    continue
                 role = matches_target_role(job["title"])
                 if role and has_remote:
                     matched_jobs.append((role, job))
