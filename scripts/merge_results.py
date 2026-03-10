@@ -9,7 +9,7 @@ Reads:
   output/founding-jobs.csv   — founding engineer roles from board sources
 
 Writes:
-  output/all-jobs.csv        — unified, deduplicated, sorted by fit score
+  output/all-jobs.csv        — unified, deduplicated, sorted by score
 
 Run after the full pipeline:
     python3 scripts/merge_results.py
@@ -30,20 +30,19 @@ BOARD     = OUTPUT_DIR / "board-jobs.csv"
 FOUNDING  = OUTPUT_DIR / "founding-jobs.csv"
 OUT_PATH  = OUTPUT_DIR / "all-jobs.csv"
 
-# Columns in the final unified CSV — order matters for readability
+# Final column order — front-loaded with the three most-used fields
 OUTPUT_COLS = [
-    "source",
-    "company",
-    "job_title",
-    "job_url",
-    "location",
-    "role_type",
-    "level",
-    "fit_score",
-    "posted_at",
-    "salary_min",
-    "salary_max",
-    "resume_used",
+    "Company",
+    "Title",
+    "URL",
+    "Role",
+    "Level",
+    "Score",
+    "Source",
+    "Location",
+    "Posted",
+    "Salary Min",
+    "Salary Max",
 ]
 
 
@@ -51,39 +50,38 @@ def _load_rescored(path: Path) -> pd.DataFrame:
     """Normalise rescored-jobs.csv → unified schema."""
     df = pd.read_csv(path)
     return pd.DataFrame({
-        "source":      df["ats"],
-        "company":     df["company_name"],
-        "job_title":   df["job_title"],
-        "job_url":     df["job_url"],
-        "location":    "",                        # ATS batch APIs don't include location
-        "role_type":   df["role_type"],
-        "level":       df["level"],
-        "fit_score":   df["fit_score_jd"],        # prefer full-JD score
-        "posted_at":   "",
-        "salary_min":  None,
-        "salary_max":  None,
-        "resume_used": df["resume_used"],
+        "Company":    df["company_name"],
+        "Title":      df["job_title"],
+        "URL":        df["job_url"],
+        "Role":       df["role_type"],
+        "Level":      df["level"],
+        "Score":      (df["fit_score_jd"] * 100).round(1),  # 0.882 → 88.2
+        "Source":     df["ats"],
+        "Location":   "",
+        "Posted":     "",
+        "Salary Min": "",
+        "Salary Max": "",
     })
 
 
 def _load_board(path: Path, is_founding: bool = False) -> pd.DataFrame:
     """Normalise board-jobs.csv or founding-jobs.csv → unified schema."""
     df = pd.read_csv(path)
-    if is_founding:
-        df["role_type"] = "founding"
+    role_col = "founding" if is_founding else df["role_type"]
+    salary_min = df["salary_min"] if "salary_min" in df.columns else ""
+    salary_max = df["salary_max"] if "salary_max" in df.columns else ""
     return pd.DataFrame({
-        "source":      df["source"],
-        "company":     df["company"],
-        "job_title":   df["job_title"],
-        "job_url":     df["job_url"],
-        "location":    df.get("location", ""),
-        "role_type":   df["role_type"],
-        "level":       df["level"],
-        "fit_score":   df["fit_score"],
-        "posted_at":   df.get("posted_at", ""),
-        "salary_min":  df.get("salary_min"),
-        "salary_max":  df.get("salary_max"),
-        "resume_used": df["resume_used"],
+        "Company":    df["company"],
+        "Title":      df["job_title"],
+        "URL":        df["job_url"],
+        "Role":       role_col,
+        "Level":      df["level"],
+        "Score":      (df["fit_score"] * 100).round(1),
+        "Source":     df["source"],
+        "Location":   df["location"] if "location" in df.columns else "",
+        "Posted":     df["posted_at"] if "posted_at" in df.columns else "",
+        "Salary Min": salary_min,
+        "Salary Max": salary_max,
     })
 
 
@@ -95,21 +93,21 @@ def main() -> None:
         print(f"  rescored-jobs:  {len(df):>4} rows")
         frames.append(df)
     else:
-        print(f"  rescored-jobs:  not found (run fetch_jds_and_rescore.py)")
+        print("  rescored-jobs:  not found (run fetch_jds_and_rescore.py)")
 
     if BOARD.exists():
         df = _load_board(BOARD)
         print(f"  board-jobs:     {len(df):>4} rows")
         frames.append(df)
     else:
-        print(f"  board-jobs:     not found (run fetch_board_jobs.py)")
+        print("  board-jobs:     not found (run fetch_board_jobs.py)")
 
     if FOUNDING.exists():
         df = _load_board(FOUNDING, is_founding=True)
         print(f"  founding-jobs:  {len(df):>4} rows")
         frames.append(df)
     else:
-        print(f"  founding-jobs:  not found (run fetch_board_jobs.py)")
+        print("  founding-jobs:  not found (run fetch_board_jobs.py)")
 
     if not frames:
         print("\nNo output files found — run the pipeline first.")
@@ -118,15 +116,22 @@ def main() -> None:
     merged = pd.concat(frames, ignore_index=True)
     before = len(merged)
 
-    # Deduplicate: same company + same URL is the same job regardless of source
-    merged = merged.drop_duplicates(subset=["company", "job_url"], keep="first")
+    # Deduplicate: same company + same URL = same job regardless of source
+    merged = merged.drop_duplicates(subset=["Company", "URL"], keep="first")
     dupes = before - len(merged)
 
-    # Sort: best fit score first, then alphabetically within ties
+    # Sort: best score first, then alpha within ties
     merged = merged.sort_values(
-        ["fit_score", "company", "job_title"],
+        ["Score", "Company", "Title"],
         ascending=[False, True, True],
     )
+
+    # Strip leading/trailing whitespace from text columns
+    for col in ("Company", "Title", "Location"):
+        merged[col] = merged[col].astype(str).str.strip()
+
+    # Replace NaN/None/empty with blank string — no "NaN" in the CSV
+    merged = merged.fillna("").replace({None: ""})
 
     OUTPUT_DIR.mkdir(exist_ok=True)
     merged[OUTPUT_COLS].to_csv(OUT_PATH, index=False)
@@ -134,14 +139,13 @@ def main() -> None:
     print(f"\n  {before} total → {dupes} duplicates removed → {len(merged)} unique jobs")
     print(f"\nSaved → {OUT_PATH}")
 
-    # Quick breakdown
-    print("\nBy role type:")
-    print(merged["role_type"].value_counts().to_string())
+    # Summary
+    print("\nBy role:")
+    print(merged["Role"].value_counts().to_string())
     print("\nBy source:")
-    print(merged["source"].value_counts().to_string())
-    print(f"\nTop 10 by fit score:")
-    display_cols = ["company", "job_title", "role_type", "fit_score", "source"]
-    print(merged[display_cols].head(10).to_string(index=False))
+    print(merged["Source"].value_counts().to_string())
+    print(f"\nTop 10 by score:")
+    print(merged[["Company", "Title", "Role", "Score"]].head(10).to_string(index=False))
 
 
 if __name__ == "__main__":
