@@ -19,6 +19,12 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
+# Load .env so cron (which has a bare environment) gets HF_TOKEN etc.
+# set -a auto-exports every variable; set +a turns it back off.
+if [[ -f ".env" ]]; then
+    set -a; source .env; set +a
+fi
+
 # Activate venv
 if [[ -f ".venv/bin/activate" ]]; then
     source .venv/bin/activate
