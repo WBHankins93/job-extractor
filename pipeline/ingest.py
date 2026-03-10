@@ -33,6 +33,13 @@ _EXCLUDE_RE = re.compile(
     re.I,
 )
 
+# Additional phrases (per canonical role) that are equivalent to a TARGET_ROLES
+# entry but wouldn't be caught by simple substring matching.  E.g. Amazon uses
+# "Software Development Engineer" / "SDE" rather than "Software Engineer".
+_ROLE_ALIASES: dict[str, list[str]] = {
+    "Software Engineer": ["Software Development Engineer", " SDE "],
+}
+
 # Seniority label parsed from title for display in the report.
 _LEVEL_PATTERNS = [
     ("junior", re.compile(r"\b(junior|jr\.?|entry.?level|associate)\b", re.I)),
@@ -59,17 +66,40 @@ def matches_target_role(title: str) -> str | None:
     Return the matched TARGET_ROLES entry for `title`, or None.
 
     Returns None for any management, lead, or over-senior-IC title.
-    Case-insensitive substring match — 'Senior Software Engineer' matches
-    'Software Engineer' because 'senior' isn't an excluded term; only
-    management/leadership terms are excluded.
+
+    Matching order:
+      1. Find the first target role (or alias) whose phrase appears in the
+         title via case-insensitive substring search.
+      2. Strip that matched phrase from the title, then apply _EXCLUDE_RE
+         to the *remainder* — this prevents words that are legitimately part
+         of a target role (e.g. "manager" in "Technical Product Manager")
+         from triggering the exclusion, while still blocking modifiers like
+         "Lead", "Director of", etc. that wrap an otherwise valid role.
     """
-    if _EXCLUDE_RE.search(title):
-        return None
     title_lower = title.lower()
+
+    # Step 1: find the first matching role (canonical name or alias).
+    matched_role: str | None = None
+    matched_phrase: str | None = None
     for role in TARGET_ROLES:
-        if role.lower() in title_lower:
-            return role
-    return None
+        phrases = [role] + _ROLE_ALIASES.get(role, [])
+        for phrase in phrases:
+            if phrase.lower() in title_lower:
+                matched_role = role
+                matched_phrase = phrase.lower()
+                break
+        if matched_role:
+            break
+
+    if matched_role is None:
+        return None
+
+    # Step 2: check exclusions on the part of the title outside the role phrase.
+    remainder = title_lower.replace(matched_phrase, "")  # type: ignore[arg-type]
+    if _EXCLUDE_RE.search(remainder):
+        return None
+
+    return matched_role
 
 
 def matches_founding_role(title: str) -> bool:
