@@ -20,16 +20,17 @@ from pathlib import Path
 import httpx
 import pandas as pd
 
-from pipeline.ingest import TARGET_ROLES
+from pipeline.ingest import matches_target_role, matches_founding_role, parse_level
 from pipeline.embed import (
     load_resumes, get_chroma_client, build_resume_collection,
     score_job_fit, ROLE_TO_RESUME,
 )
 from pipeline.sources import levels, yc, getro
-from main import matches_target_role, MAX_AGE_DAYS, _is_fresh
+from main import MAX_AGE_DAYS, _is_fresh
 
-OUTPUT_DIR = Path("output")
-OUT_PATH   = OUTPUT_DIR / "board-jobs.csv"
+OUTPUT_DIR   = Path("output")
+OUT_PATH     = OUTPUT_DIR / "board-jobs.csv"
+FOUNDING_OUT = OUTPUT_DIR / "founding-jobs.csv"
 
 
 async def run(resume_collection) -> list[dict]:
@@ -95,16 +96,49 @@ async def run(resume_collection) -> list[dict]:
             "salary_min":  job.get("salary_min"),
             "salary_max":  job.get("salary_max"),
             "role_type":   role,
+            "level":       parse_level(job["title"]),
             "resume_used": best_resume,
             "fit_score":   round(best_score, 3),
         })
 
-    print(f"  {len(scored)} jobs matched a target role\n")
-    return scored
+    print(f"  {len(scored)} jobs matched a target role")
+
+    # --- Second pass: Founding Engineer (standalone, not already in main table) ---
+    founding_scored: list[dict] = []
+    all_resume_files = list(set(ROLE_TO_RESUME.values()))
+
+    for job in fresh:
+        if not matches_founding_role(job["title"]):
+            continue
+        best_score, best_resume = 0.0, None
+        jd_text = f"{job['title']} {job.get('location', '')}".strip()
+        for r_file in all_resume_files:
+            s = score_job_fit(jd_text, r_file, resume_collection)
+            if s > best_score:
+                best_score, best_resume = s, r_file
+        founding_scored.append({
+            "source":      job["source"],
+            "company":     job["company"],
+            "job_title":   job["title"],
+            "job_url":     job["url"],
+            "location":    job["location"],
+            "remote":      job["remote"],
+            "posted_at":   job.get("posted_at", ""),
+            "salary_min":  job.get("salary_min"),
+            "salary_max":  job.get("salary_max"),
+            "role_type":   "founding",
+            "level":       parse_level(job["title"]),
+            "resume_used": best_resume,
+            "fit_score":   round(best_score, 3),
+        })
+
+    print(f"  {len(founding_scored)} founding engineer roles found\n")
+    return scored, founding_scored
 
 
-def save(rows: list[dict]) -> None:
+def save(rows: list[dict], founding_rows: list[dict]) -> None:
     OUTPUT_DIR.mkdir(exist_ok=True)
+
     df = pd.DataFrame(rows).sort_values("fit_score", ascending=False)
     df.to_csv(OUT_PATH, index=False)
     print(f"Saved → {OUT_PATH}")
@@ -116,6 +150,11 @@ def save(rows: list[dict]) -> None:
     by_source = df.groupby("source")["fit_score"].count().to_dict()
     print(f"  By source: {by_source}")
 
+    if founding_rows:
+        fdf = pd.DataFrame(founding_rows).sort_values("fit_score", ascending=False)
+        fdf.to_csv(FOUNDING_OUT, index=False)
+        print(f"\nSaved {len(fdf)} founding roles → {FOUNDING_OUT}")
+
 
 def main() -> None:
     print("=== Board Job Fetcher ===\n")
@@ -126,12 +165,14 @@ def main() -> None:
     resume_collection = build_resume_collection(chroma, resumes)
     print()
 
-    rows = asyncio.run(run(resume_collection))
+    rows, founding_rows = asyncio.run(run(resume_collection))
 
     if rows:
-        save(rows)
+        save(rows, founding_rows)
     else:
         print("No matching jobs found.")
+        if founding_rows:
+            save([], founding_rows)
 
 
 if __name__ == "__main__":

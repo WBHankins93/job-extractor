@@ -27,6 +27,7 @@ from rich.text import Text
 
 RESCORED_CSV  = Path("output/rescored-jobs.csv")
 BOARD_CSV     = Path("output/board-jobs.csv")
+FOUNDING_CSV  = Path("output/founding-jobs.csv")
 
 
 def _tier(score: float) -> tuple[str, str]:
@@ -67,6 +68,14 @@ def _source_badge(source: str) -> Text:
     return Text(source.upper(), style=colors.get(source, "white"))
 
 
+def _fmt_level(level: str) -> Text:
+    if level == "senior":
+        return Text("senior", style="cyan bold")
+    if level == "junior":
+        return Text("junior", style="dim")
+    return Text("mid", style="white")
+
+
 def _load_rescored(min_score: float) -> pd.DataFrame:
     """Load rescored-jobs.csv and normalize to the shared display schema."""
     if not RESCORED_CSV.exists():
@@ -82,6 +91,7 @@ def _load_rescored(min_score: float) -> pd.DataFrame:
         "score_delta": df["score_delta"],
         "jd_found":    df.get("jd_found", True),
         "source":      "ats",
+        "level":       df["level"] if "level" in df.columns else "mid",
         "posted_at":   df.get("posted_at", ""),
         "salary_min":  None,
         "salary_max":  None,
@@ -102,10 +112,59 @@ def _load_board(min_score: float) -> pd.DataFrame:
         "score_delta": None,
         "jd_found":    True,
         "source":      df.get("source", "board"),
+        "level":       df["level"] if "level" in df.columns else "mid",
         "posted_at":   df.get("posted_at", ""),
         "salary_min":  df.get("salary_min"),
         "salary_max":  df.get("salary_max"),
     })
+
+
+def _load_founding() -> pd.DataFrame:
+    """Load founding-jobs.csv — no minimum score filter (show all)."""
+    if not FOUNDING_CSV.exists():
+        return pd.DataFrame()
+    return pd.read_csv(FOUNDING_CSV)
+
+
+def _print_founding_table(console: Console, df: pd.DataFrame) -> None:
+    """Print a separate table for Founding Engineer roles (all scores shown)."""
+    df = df.sort_values("fit_score", ascending=False)
+    has_salary = "salary_min" in df.columns and not df["salary_min"].isna().all()
+
+    table = Table(
+        box=box.SIMPLE_HEAD,
+        show_header=True,
+        header_style="bold magenta",
+        expand=False,
+        padding=(0, 1),
+        title="[bold magenta]Founding Engineer Roles[/bold magenta]",
+        title_justify="left",
+    )
+    table.add_column("Company",  style="bold cyan", min_width=18, no_wrap=True)
+    table.add_column("Role",     min_width=30)
+    table.add_column("Src",      min_width=5,  justify="center")
+    table.add_column("Score",    min_width=5,  justify="right")
+    if has_salary:
+        table.add_column("Salary", min_width=14, justify="right")
+    table.add_column("Apply URL")
+
+    for _, row in df.iterrows():
+        score = float(row.get("fit_score", 0))
+        salary_min = row.get("salary_min")
+        salary_max = row.get("salary_max")
+        cells = [
+            str(row.get("company", "")),
+            str(row.get("job_title", "")),
+            _source_badge(str(row.get("source", ""))),
+            f"{score:.3f}",
+        ]
+        if has_salary:
+            cells.append(_fmt_salary(salary_min, salary_max))
+        cells.append(_truncate(str(row.get("job_url", ""))))
+        table.add_row(*cells)
+
+    console.print(table)
+    console.print(f"  [magenta]{len(df)}[/magenta] founding engineer role(s) found\n")
 
 
 def main() -> None:
@@ -162,6 +221,7 @@ def main() -> None:
     table.add_column("Company",  style="bold cyan", min_width=18, no_wrap=True)
     table.add_column("Role",     min_width=26)
     table.add_column("Src",      min_width=5,  justify="center")
+    table.add_column("Level",    min_width=6,  justify="center")
     table.add_column("Tier",     min_width=6,  justify="center")
     table.add_column("Score",    min_width=5,  justify="right")
     table.add_column("Δ",        min_width=6,  justify="right")
@@ -183,10 +243,12 @@ def main() -> None:
                 good_count += 1
 
             delta = row.get("score_delta")
+            level_val = str(row.get("level", "mid")) if not pd.isna(row.get("level", "mid")) else "mid"
             cells = [
                 company if first else "",
                 str(row.get("job_title", "")),
                 _source_badge(str(row.get("source", ""))),
+                _fmt_level(level_val),
                 Text(label, style=color),
                 f"{score:.3f}",
                 _fmt_delta(None if pd.isna(delta) else float(delta)),
@@ -210,6 +272,12 @@ def main() -> None:
         f"[dim](min score {args.min_score})[/dim]  {src_str}"
     )
     console.print()
+
+    # --- Founding Engineer table (separate, no min-score filter) ---
+    if not args.ats_only:
+        founding_df = _load_founding()
+        if not founding_df.empty:
+            _print_founding_table(console, founding_df)
 
 
 if __name__ == "__main__":
