@@ -49,7 +49,7 @@ from pipeline.embed import (
     load_resumes,
     score_job_fit,
 )
-from pipeline.ingest import matches_target_role, parse_level
+from pipeline.ingest import matches_target_role, parse_level, is_us_location
 
 
 INPUT_CSV  = Path(__file__).resolve().parent.parent / "output" / "remote-roles.csv"
@@ -326,8 +326,8 @@ async def process_company(
     except Exception:
         return []
 
-    # Step 3: Filter to remote-only
-    remote_jobs = [j for j in jobs if j.get("remote")]
+    # Step 3: Filter to remote-only US jobs
+    remote_jobs = [j for j in jobs if j.get("remote") and is_us_location(j.get("location", ""))]
     if not remote_jobs:
         return []
 

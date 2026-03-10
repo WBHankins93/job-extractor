@@ -20,7 +20,7 @@ from pathlib import Path
 import httpx
 import pandas as pd
 
-from pipeline.ingest import matches_target_role, matches_founding_role, parse_level
+from pipeline.ingest import matches_target_role, matches_founding_role, parse_level, is_us_location
 from pipeline.embed import (
     load_resumes, get_chroma_client, build_resume_collection,
     score_job_fit, ROLE_TO_RESUME,
@@ -72,6 +72,8 @@ async def run(resume_collection) -> list[dict]:
         role = matches_target_role(job["title"])
         if not role:
             continue
+        if not is_us_location(job.get("location", "")):
+            continue
 
         resume_file = ROLE_TO_RESUME.get(role)
         if not resume_file:
@@ -111,6 +113,8 @@ async def run(resume_collection) -> list[dict]:
 
     for job in fresh:
         if not matches_founding_role(job["title"]):
+            continue
+        if not is_us_location(job.get("location", "")):
             continue
         best_score, best_resume = 0.0, None
         jd_text = f"{job['title']} {job.get('location', '')}".strip()

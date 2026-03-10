@@ -40,6 +40,43 @@ _ROLE_ALIASES: dict[str, list[str]] = {
     "Software Engineer": ["Software Development Engineer", " SDE "],
 }
 
+# International location exclusion — reject only when a clear non-US signal appears.
+# Bare "Remote", empty, or US city/state all pass through.
+_NON_US_RE = re.compile(
+    r"\b(uk|england|scotland|wales|london|manchester|leeds|birmingham|"
+    r"berlin|munich|hamburg|cologne|frankfurt|"
+    r"paris|lyon|"
+    r"amsterdam|rotterdam|"
+    r"toronto|vancouver|montreal|canada|"
+    r"sydney|melbourne|brisbane|australia|"
+    r"bangalore|mumbai|delhi|hyderabad|india|"
+    r"europe|apac|emea|latam|"
+    r"ireland|dublin|"
+    r"israel|tel aviv|"
+    r"singapore|"
+    r"japan|tokyo|"
+    r"brazil|mexico|colombia|argentina|chile|"
+    r"new zealand|south africa|hong kong|"
+    r"united kingdom|great britain|"
+    r"sweden|stockholm|denmark|copenhagen|"
+    r"norway|oslo|finland|helsinki|"
+    r"poland|warsaw|spain|madrid|barcelona|"
+    r"italy|milan|rome)\b",
+    re.I,
+)
+
+
+def is_us_location(location: str) -> bool:
+    """Return True if the location is US-based or unambiguously location-agnostic.
+
+    Rejects only when a clear non-US country or city appears.
+    Blank / 'Remote' / 'Anywhere' / US city+state all pass.
+    """
+    if not location or not location.strip():
+        return True
+    return not bool(_NON_US_RE.search(location))
+
+
 # Seniority label parsed from title for display in the report.
 _LEVEL_PATTERNS = [
     ("junior", re.compile(r"\b(junior|jr\.?|entry.?level|associate)\b", re.I)),
