@@ -43,8 +43,6 @@ ROLE_TO_RESUME = {
     "Full Stack Engineer":        "Ben_Hankins_Full_Stack.pdf",
     "Software Engineer":          "Ben_Hankins_Full_Stack.pdf",
     "Solutions Engineer":         "Ben_Hankins_Solutions_feb26.pdf",
-    "Forward Deployed Engineer":  "Ben_Hankins_Solutions_feb26.pdf",
-    "Technical Product Manager":  "Ben_Hankins_TPM.pdf",
 }
 
 
@@ -64,7 +62,7 @@ def extract_pdf_text(pdf_path: Path) -> str:
 
 def load_resumes() -> dict[str, str]:
     """
-    Load all three resumes and return {filename: text}.
+    Load configured resumes and return {filename: text}.
     Fails loudly if a resume file is missing — better to know early.
     """
     resumes = {}

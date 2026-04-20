@@ -23,7 +23,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import httpx
 import pandas as pd
 
-from pipeline.ingest import matches_target_role, matches_founding_role, parse_level, is_us_location
+from pipeline.ingest import (
+    matches_target_role,
+    matches_founding_role,
+    parse_level,
+    is_us_location,
+    within_experience_cap,
+)
 from pipeline.embed import (
     load_resumes, get_chroma_client, build_resume_collection,
     score_job_fit, ROLE_TO_RESUME,
@@ -74,6 +80,8 @@ async def run(resume_collection) -> list[dict]:
     for job in fresh:
         role = matches_target_role(job["title"])
         if not role:
+            continue
+        if not within_experience_cap(job["title"]):
             continue
         if not is_us_location(job.get("location", "")):
             continue

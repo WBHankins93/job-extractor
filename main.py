@@ -12,7 +12,14 @@ import pandas as pd
 import httpx
 from pathlib import Path
 
-from pipeline.ingest import load_companies, TARGET_ROLES, matches_target_role, parse_level, is_us_location
+from pipeline.ingest import (
+    load_companies,
+    TARGET_ROLES,
+    matches_target_role,
+    parse_level,
+    is_us_location,
+    within_experience_cap,
+)
 from pipeline.ats import detect_ats, fetch_jobs
 from pipeline.embed import (
     load_resumes, get_chroma_client, build_resume_collection,
@@ -110,7 +117,7 @@ async def process_companies(df: pd.DataFrame, resume_collection) -> pd.DataFrame
                 if not is_us_location(job.get("location", "")):
                     continue
                 role = matches_target_role(job["title"])
-                if role and has_remote:
+                if role and job.get("remote") and within_experience_cap(job["title"]):
                     matched_jobs.append((role, job))
 
             if not matched_jobs:
