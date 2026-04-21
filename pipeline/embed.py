@@ -43,6 +43,7 @@ ROLE_TO_RESUME = {
     "Full Stack Engineer":        "Ben_Hankins_Full_Stack.pdf",
     "Software Engineer":          "Ben_Hankins_Full_Stack.pdf",
     "Solutions Engineer":         "Ben_Hankins_Solutions_feb26.pdf",
+    "Forward Deployed Engineer":  "Ben_Hankins_Solutions_feb26.pdf",
 }
 
 

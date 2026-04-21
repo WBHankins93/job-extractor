@@ -19,6 +19,7 @@ TARGET_ROLES = [
     "Full Stack Engineer",
     "Software Engineer",
     "Solutions Engineer",
+    "Forward Deployed Engineer",
 ]
 
 # Titles matching this pattern are excluded from role matching.
@@ -38,6 +39,7 @@ _ROLE_ALIASES: dict[str, list[str]] = {
     "Software Engineer": ["Software Development Engineer", " SDE "],
     "Solutions Engineer": ["Sales Engineer", "Solutions Consultant"],
     "Full Stack Engineer": ["Full-Stack Engineer", "Fullstack Engineer"],
+    "Forward Deployed Engineer": ["Forward Deployed Software Engineer", "FDE"],
 }
 
 # Exclude titles that indicate years of experience beyond the target cap.

@@ -215,6 +215,7 @@ The pipeline matches jobs against these title substrings (case-insensitive):
 | 🖥️ Software Engineer | `Ben_Hankins_Full_Stack.pdf` |
 | 🔧 Full Stack Engineer | `Ben_Hankins_Full_Stack.pdf` |
 | 🤝 Solutions Engineer | `Ben_Hankins_Solutions_feb26.pdf` |
+| 🚀 Forward Deployed Engineer | `Ben_Hankins_Solutions_feb26.pdf` |
 
 > Edit `TARGET_ROLES` in `pipeline/ingest.py` and `ROLE_TO_RESUME` in `pipeline/embed.py` to customize for your background.
 
