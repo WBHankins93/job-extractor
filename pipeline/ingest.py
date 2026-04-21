@@ -13,23 +13,22 @@ import pandas as pd
 from pathlib import Path
 
 
-# The 5 target roles we're hunting for.
+# The target roles we're hunting for.
 # Using a list here means we can easily add more later.
 TARGET_ROLES = [
     "Full Stack Engineer",
     "Software Engineer",
     "Solutions Engineer",
     "Forward Deployed Engineer",
-    "Technical Product Manager",
 ]
 
 # Titles matching this pattern are excluded from role matching.
 # Covers management track, over-senior IC (Staff/Principal), and leadership
 # roles — all inappropriate for a ≤6 year IC job search.
 _EXCLUDE_RE = re.compile(
-    r"\b(lead|manager|management|director|vp|vice[\s-]*president|"
+    r"\b(senior|sr\.?|lead|manager|management|director|vp|vice[\s-]*president|"
     r"head\s+of|chief|principal|staff|president|partner|"
-    r"cto|ceo|coo|cfo)\b",
+    r"cto|ceo|coo|cfo|architect)\b",
     re.I,
 )
 
@@ -38,7 +37,20 @@ _EXCLUDE_RE = re.compile(
 # "Software Development Engineer" / "SDE" rather than "Software Engineer".
 _ROLE_ALIASES: dict[str, list[str]] = {
     "Software Engineer": ["Software Development Engineer", " SDE "],
+    "Solutions Engineer": ["Sales Engineer", "Solutions Consultant"],
+    "Full Stack Engineer": ["Full-Stack Engineer", "Fullstack Engineer"],
+    "Forward Deployed Engineer": ["Forward Deployed Software Engineer", "FDE"],
 }
+
+# Exclude titles that indicate years of experience beyond the target cap.
+_TITLE_YOE_RE = re.compile(
+    r"\b(\d{1,2})\s*\+?\s*(?:years?|yrs?)\b.{0,40}\b(?:experience|exp)\b|"
+    r"\b(?:experience|exp)\b.{0,40}\b(\d{1,2})\s*\+?\s*(?:years?|yrs?)\b",
+    re.I,
+)
+
+# Also exclude very senior roman numeral leveling in title (SWE III+).
+_TITLE_LEVEL_RE = re.compile(r"\b(?:iii|iv|v|l4|l5|l6)\b", re.I)
 
 # International location exclusion — reject only when a clear non-US signal appears.
 # Bare "Remote", empty, or US city/state all pass through.
@@ -109,8 +121,7 @@ def matches_target_role(title: str) -> str | None:
          title via case-insensitive substring search.
       2. Strip that matched phrase from the title, then apply _EXCLUDE_RE
          to the *remainder* — this prevents words that are legitimately part
-         of a target role (e.g. "manager" in "Technical Product Manager")
-         from triggering the exclusion, while still blocking modifiers like
+         of a target role from triggering the exclusion, while still blocking modifiers like
          "Lead", "Director of", etc. that wrap an otherwise valid role.
     """
     title_lower = title.lower()
@@ -137,6 +148,34 @@ def matches_target_role(title: str) -> str | None:
         return None
 
     return matched_role
+
+
+def within_experience_cap(title: str, jd_text: str = "", max_years: int = 3) -> bool:
+    """
+    True when the role appears to require <= max_years experience.
+
+    Heuristics:
+      - reject title patterns for senior/staff/principal/lead/etc. via _EXCLUDE_RE
+      - reject title level markers like III / IV / L4+
+      - parse explicit years-of-experience in title or JD text and reject if > max_years
+    """
+    title_l = title.lower()
+    if _EXCLUDE_RE.search(title_l):
+        return False
+    if _TITLE_LEVEL_RE.search(title_l):
+        return False
+
+    text = f"{title}\n{jd_text or ''}"
+    for m in _TITLE_YOE_RE.finditer(text):
+        years_str = m.group(1) or m.group(2)
+        if not years_str:
+            continue
+        try:
+            if int(years_str) > max_years:
+                return False
+        except ValueError:
+            continue
+    return True
 
 
 def matches_founding_role(title: str) -> bool:
@@ -183,7 +222,7 @@ def load_companies(csv_path: str | Path) -> pd.DataFrame:
     df["career_url"] = df["career_url"].str.strip()
 
     # --- Add output columns (empty for now, filled by later stages) ---
-    # role_type: which of the 5 target roles was found, if any
+    # role_type: which target role was found, if any
     # remote:    True/False/None — does the company offer remote?
     df["role_type"] = None
     df["remote"] = None

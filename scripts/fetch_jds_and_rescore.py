@@ -49,7 +49,7 @@ from pipeline.embed import (
     load_resumes,
     score_job_fit,
 )
-from pipeline.ingest import matches_target_role, parse_level, is_us_location
+from pipeline.ingest import matches_target_role, parse_level, is_us_location, within_experience_cap
 
 
 INPUT_CSV  = Path(__file__).resolve().parent.parent / "output" / "remote-roles.csv"
@@ -338,6 +338,8 @@ async def process_company(
         role = matches_target_role(job["title"])
         if not role:
             return None  # skip non-target-role jobs entirely
+        if not within_experience_cap(job["title"]):
+            return None
 
         # Decide which resume to score against
         mapped = ROLE_TO_RESUME.get(role)
@@ -360,6 +362,9 @@ async def process_company(
             async with sem_jd:
                 jd_text = await fetch_jd_text(ats, slug, job, client) or ""
             jd_found = bool(jd_text.strip())
+
+        if jd_found and not within_experience_cap(job["title"], jd_text=jd_text):
+            return None
 
         # Score with full JD (or fall back to title baseline if not found)
         if jd_found:
