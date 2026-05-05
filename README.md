@@ -48,6 +48,12 @@ Two source tracks run in parallel and merge into one ranked output.
 
 ---
 
+## 🗺️ Roadmap
+
+Planned next-phase improvements (testing, observability, dedupe, scraping discovery, UI prep) are tracked in [`ROADMAP.md`](./ROADMAP.md).
+
+---
+
 ## ⚡ Quickstart
 
 **Requirements:** Python 3.12+
